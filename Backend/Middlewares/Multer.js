@@ -5,7 +5,7 @@ const MIME_TYPE = {
   "image/jpeg": "jpeg",
 };
 exports.fileUpload = Multer({
-  limits: 500000,
+  limits: 1024 * 1024 * 2,
   storage: Multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
     const isValid = !!MIME_TYPE[file.mimetype];
