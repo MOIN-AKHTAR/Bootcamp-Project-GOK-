@@ -1,5 +1,10 @@
 const Express = require("express");
 const Dotenv = require("dotenv");
+const UserRoute = require("./Routes/UserRoute");
+const UploadRoute = require("./Routes/UploadRoute");
+const ErrorClass = require("./Utils/ErrorClass");
+const CustomError = require("./Utils/CustomError");
+const Morgan = require("morgan");
 // Running Connection Script
 require("./Connection");
 // Configuring For Environment Variables
@@ -28,6 +33,25 @@ App.use((req, res, next) => {
   }
   next();
 });
+
+App.use(Morgan("dev"));
+// Mounting Routes
+App.use("/api/v1/user", UserRoute);
+App.use("/api/v1/upload", UploadRoute);
+
+// It Will Be Execute When There Is No Path To Be Found
+App.all("*", (req, res, next) => {
+  return next(
+    new ErrorClass(
+      `Unable To Find ${req.protocol}://${req.get("host")}${req.originalUrl} `,
+      404
+    )
+  );
+});
+
+// Execute This MiddleWare When Any Error Occur
+App.use(CustomError);
+
 const Port = process.env.PORT || 5000;
 // Listening
 App.listen(Port, (err) => {

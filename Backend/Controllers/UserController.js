@@ -39,25 +39,17 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
 // @Access  Public
 exports.Login = AsyncWrapper(async (req, res, next) => {
   // Checking Validations
-  const {} = LogInValidation(req.body);
+  const { error, isValid } = LogInValidation(req.body);
   if (!isValid) {
     return next(new ErrorClass("Validation Error", error, 400));
   }
-  const { email = "", password = "" } = req.body;
-  const User = await UserModel.findOne({
-    email,
-  });
-
-  if (User.email !== email) {
-    return next(new ErrorClass("Invalid Email Or Password", undefined, 403));
-  }
-
-  const isValid = await UserModel.matchPassword(password);
-  if (!isValid) {
-    return next(new ErrorClass("Invalid Email Or Password", undefined, 403));
-  }
+  const User = await UserModel.findOne({ email: req.body.email });
 
   if (!User) {
+    return next(new ErrorClass("Invalid Email Or Password", undefined, 404));
+  }
+  const isCorrectPassword = await User.matchPassword(req.body.password);
+  if (!isCorrectPassword) {
     return next(new ErrorClass("Invalid Email Or Password", undefined, 403));
   }
 
@@ -73,7 +65,7 @@ exports.Login = AsyncWrapper(async (req, res, next) => {
 // @Route   POST api/v1/users/me
 // @Access  Private
 exports.GetMe = (req, res, next) => {
-  res.status(200).json({});
+  res.status(200).json({ data: req.user });
 };
 
 // @Desc    Get All Users With Role="user"

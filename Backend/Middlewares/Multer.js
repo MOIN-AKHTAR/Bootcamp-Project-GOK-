@@ -1,15 +1,11 @@
-const Multer = require("multer");
-const MIME_TYPE = {
-  "image/png": "png",
-  "image/jpg": "jpg",
-  "image/jpeg": "jpeg",
-};
-exports.fileUpload = Multer({
-  limits: 1024 * 1024 * 2,
-  storage: Multer.diskStorage({}),
+const multer = require("multer");
+module.exports = multer({
+  storage: multer.diskStorage({}),
   fileFilter: (req, file, cb) => {
-    const isValid = !!MIME_TYPE[file.mimetype];
-    const error = isValid ? null : new Error("Invalid Image Type");
-    cb(error, isValid);
+    if (!file.mimetype.match(/jpeg||jpg||png$/i)) {
+      cb(new Error("This File Is Not Allowed", false));
+      return;
+    }
+    cb(null, true);
   },
 });

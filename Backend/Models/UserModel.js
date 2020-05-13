@@ -49,16 +49,16 @@ const userSchema = Mongoose.Schema({
     type: Number,
     default: new Date().getMonth(),
   },
-  uploads: {
-    type: [
-      {
-        type: Mongoose.Types.ObjectId,
-        ref: "Status",
-      },
-    ],
-    default: [],
-    select: false,
-  },
+  // uploads: {
+  //   type: [
+  //     {
+  //       type: Mongoose.Schema.ObjectId,
+  //       ref: "Status",
+  //     },
+  //   ],
+  //   default: [],
+  //   select: false,
+  // },
 });
 // Generate Token
 userSchema.methods.genToken = function () {

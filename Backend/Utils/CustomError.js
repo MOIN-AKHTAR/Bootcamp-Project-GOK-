@@ -1,4 +1,3 @@
-const fs = require("fs");
 const ErrorHandler = require("./ErrorClass");
 
 const CustomErrorHandler = (err, req, res, next) => {

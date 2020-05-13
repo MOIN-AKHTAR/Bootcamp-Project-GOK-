@@ -1,5 +1,5 @@
 const Validator = require("validator");
-const isEmpty = require("../../Utils/IsEmpty");
+const { isEmpty } = require("../../Utils/IsEmpty");
 const LogInValidation = (data) => {
   const error = {};
   data.email = !isEmpty(data.email) ? data.email : "";
@@ -12,9 +12,6 @@ const LogInValidation = (data) => {
   }
   if (Validator.isEmpty(data.password)) {
     error.password = "Please Provide Password";
-  }
-  if (!Validator.isLength(data.password, { min: 6 })) {
-    error.password = "Password Must Be Atleast 6 Characters Long";
   }
 
   return {
