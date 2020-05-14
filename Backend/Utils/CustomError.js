@@ -4,6 +4,10 @@ const CustomErrorHandler = (err, req, res, next) => {
   // If We Not Going From If Conditions The Data Which Is In err Will Be Used
   let error = { ...err };
   error.message = err.message;
+  if (err === "Must supply api_key") {
+    const message = "Must supply api_key";
+    error = new ErrorHandler(message, undefined, 400);
+  }
   if (err.name === "CastError") {
     const message = "Invalid ObjectId " + err.value;
     error = new ErrorHandler(message, undefined, 400);

@@ -1,42 +1,43 @@
 const Mongoose = require("mongoose");
 
-const uploadSchema = Mongoose.Schema({
-  month: {
-    type: Number,
-    default: new Date().getMonth(),
-  },
-  year: {
-    type: Number,
-    default: new Date().getFullYear(),
-  },
-  pic: {
-    type: String,
-    required: [true, "Please Provide Picture"],
-  },
-  amount: {
-    type: Number,
-    required: [true, "Please Provide Amount"],
-  },
-  status: {
-    type: String,
-    enum: {
-      values: ["pending", "declined", "approved"],
-      message: "Invalid Status-Status Can Be pending/declined/approved",
+const uploadSchema = Mongoose.Schema(
+  {
+    month: {
+      type: Number,
+      default: new Date().getMonth(),
     },
-    default: "pending",
-  },
-  status: {
-    type: String,
-    enum: {
-      values: ["active", "inactive"],
-      message: "Status Should Be Either active/inactive",
+    year: {
+      type: Number,
+      default: new Date().getFullYear(),
     },
-    default: "active",
+    pic: {
+      type: String,
+      required: [true, "Please Provide Picture"],
+    },
+    amount: {
+      type: Number,
+      required: [true, "Please Provide Amount"],
+    },
+    status: {
+      type: String,
+      enum: {
+        values: ["pending", "declined", "approved"],
+        message: "Invalid Status-Status Can Be pending/declined/approved",
+      },
+      default: "pending",
+    },
+    active: {
+      type: Boolean,
+      default: true,
+    },
+    user: {
+      type: Mongoose.Schema.ObjectId,
+      ref: "User",
+    },
   },
-  user: {
-    type: Mongoose.Schema.ObjectId,
-    ref: "User",
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = Mongoose.model("Upload", uploadSchema);

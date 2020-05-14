@@ -9,9 +9,17 @@ const {
   getUpload,
   deleteUpload,
   getAll,
+  approveUpload,
+  rejectUpload,
+  getHistoryViaMonth,
+  getHistoryViaYear,
+  deleteAllUploads,
 } = require("../Controllers/UploadController");
 
 const Router = Express.Router();
+
+Router.route("/approved/:id").patch(approveUpload);
+Router.route("/reject/:id").patch(rejectUpload);
 
 Router.use(Protected);
 
@@ -22,7 +30,10 @@ Router.route("/").post(
   createUpload
 );
 
-Router.route("/all").get(getAll);
+Router.route("/history/month/:month").get(getHistoryViaMonth);
+Router.route("/history/year/:year").get(getHistoryViaYear);
+
+Router.route("/all").get(getAll).delete(deleteAllUploads);
 
 Router.route("/:id")
   .put(Multer.single("pic"), updateUpload)

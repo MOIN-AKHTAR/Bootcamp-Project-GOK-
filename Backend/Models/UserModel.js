@@ -6,60 +6,59 @@ Dotenv.config({
   path: "../.env",
 });
 
-const userSchema = Mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: [true, "Please Provide Your Name"],
-  },
-  email: {
-    type: String,
-    trim: true,
-    required: [true, "Please Provide Email"],
-  },
-  password: {
-    type: String,
-    required: [true, "Please Provide Password"],
-    minlength: [6, "Password Must Be 6 Character Long"],
-  },
-  pic: String,
-  role: {
-    type: String,
-    default: "user",
-    enum: {
-      values: ["admin", "user"],
-      message: "Invalid Role-Role Can Be admin/user",
+const userSchema = Mongoose.Schema(
+  {
+    name: {
+      type: String,
+      trim: true,
+      required: [true, "Please Provide Your Name"],
+    },
+    email: {
+      type: String,
+      trim: true,
+      required: [true, "Please Provide Email"],
+    },
+    password: {
+      type: String,
+      required: [true, "Please Provide Password"],
+      minlength: [6, "Password Must Be 6 Character Long"],
+    },
+    pic: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dlzvhqidn/image/upload/v1589491585/ikbwwwla7b225e8msfo5.png",
+    },
+    role: {
+      type: String,
+      default: "user",
+      enum: {
+        values: ["admin", "user"],
+        message: "Invalid Role-Role Can Be admin/user",
+      },
+    },
+    phone_number: {
+      type: String,
+      trim: true,
+      required: [true, "Please Provide Your Contact Number"],
+    },
+    office: {
+      type: String,
+      trim: true,
+      required: [true, "Please Provide Office"],
+    },
+    year: {
+      type: Number,
+      default: new Date().getFullYear(),
+    },
+    month: {
+      type: Number,
+      default: new Date().getMonth(),
     },
   },
-  phone_number: {
-    type: String,
-    trim: true,
-    required: [true, "Please Provide Your Contact Number"],
-  },
-  office: {
-    type: String,
-    trim: true,
-    required: [true, "Please Provide Office"],
-  },
-  year: {
-    type: Number,
-    default: new Date().getFullYear(),
-  },
-  month: {
-    type: Number,
-    default: new Date().getMonth(),
-  },
-  // uploads: {
-  //   type: [
-  //     {
-  //       type: Mongoose.Schema.ObjectId,
-  //       ref: "Status",
-  //     },
-  //   ],
-  //   default: [],
-  //   select: false,
-  // },
-});
+  {
+    timestamps: true,
+  }
+);
 // Generate Token
 userSchema.methods.genToken = function () {
   return Jwt.sign({ id: this._id, role: this.role }, process.env.JWT_SECRETE, {

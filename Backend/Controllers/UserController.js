@@ -3,6 +3,10 @@ const AsyncWrapper = require("../Utils/AsynWrapper");
 const ErrorClass = require("../Utils/ErrorClass");
 const SignUpValidation = require("../Validations/UserValidation/SignUpValidation");
 const LogInValidation = require("../Validations/UserValidation/LoginValidation");
+const _ = require("lodash");
+const Cloudinary = require("cloudinary");
+const ProfileValidation = require("../Validations/UserValidation/ProfileValidation");
+require("../Middlewares/Cloudinary");
 
 // @Desc   Create User
 // @Route   POST api/v1/users/signup
@@ -24,6 +28,12 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
       )
     );
   }
+  if (req.file) {
+    console.log(req.body);
+    const Result = await Cloudinary.v2.uploader.upload(req.file.path);
+    req.body.pic = Result.secure_url;
+  }
+
   //   Creating User
   const User = await UserModel.create(req.body);
   if (!User) {
@@ -80,5 +90,25 @@ exports.GetUsers = AsyncWrapper(async (req, res, next) => {
     success: true,
     count: Users.length,
     data: Users,
+  });
+});
+
+exports.UpdateProfile = AsyncWrapper(async (req, res, next) => {
+  if (req.file) {
+    const Result = await Cloudinary.v2.uploader.upload(req.file.path);
+    req.body.pic = Result.secure_url;
+  } else {
+    req.body.pic = req.user.pic;
+  }
+  req.body.password = req.body.password ? req.body.password : req.user.password;
+  const { error, isValid } = ProfileValidation(req.body);
+  if (!isValid) {
+    return next(new ErrorClass("Validation Error", error, 400));
+  }
+  req.user = _.extend(req.user, req.body);
+  await req.user.save();
+  res.status(200).json({
+    success: true,
+    data: req.user,
   });
 });
