@@ -1,0 +1,22 @@
+.dropDown {
+  width: 70%;
+  margin: 0 10px;
+  box-shadow: 2px 2px 2px #ddd;
+}
+.dropDown:hover {
+  cursor: pointer;
+  outline: none;
+  background: #ddd;
+}
+.label {
+  font-weight: bolder;
+  margin: 0.5rem auto;
+  font-size: 1rem;
+  font-style: oblique;
+}
+.dropDownWrapper {
+  width: 90%;
+
+  margin: auto;
+  margin-top: 1rem;
+}

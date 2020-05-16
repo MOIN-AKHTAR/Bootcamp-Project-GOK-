@@ -1,0 +1,19 @@
+.fileWrapper {
+  width: 90%;
+  margin: 1rem auto;
+}
+.label {
+  margin-right: 1rem;
+  font-weight: bolder;
+  font-size: 1rem;
+  font-style: oblique;
+}
+.errorLabel {
+  display: block;
+  width: 90%;
+  margin: 5px auto;
+  font-size: 0.8rem;
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}

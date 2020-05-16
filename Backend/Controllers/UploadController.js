@@ -4,7 +4,7 @@ const AsyncWrapper = require("../Utils/AsynWrapper");
 const UploadValidation = require("../Validations/UploadsValidation/CreateUpload");
 const Cloudinary = require("cloudinary");
 const _ = require("lodash");
-const { SendEmail } = require("../Utils/SendEmail");
+// const { SendEmail } = require("../Utils/SendEmail");
 require("../Middlewares/Cloudinary");
 // @Desc   Create Upload
 // @Route   POST api/v1/upload/
@@ -23,16 +23,18 @@ exports.createUpload = AsyncWrapper(async (req, res, next) => {
   if (!Upload) {
     return next(new ErrorClass("Server Error", undefined, 500));
   }
-  SendEmail({
-    to: "moinakhter178@gmail.com",
-    from: "moin@example.com",
-    subject: `A New Upload From ${req.user.name}`,
-    text: "New Upload",
-    html: ` <div>
-        <button onclick={RejectUpload(${Upload._id})}}>Reject</button> 
-        <button onclick={ApprovedUpload(${Upload._id})}}>Approved</button>
-      </div>`,
-  });
+  //Sending Email
+  console.log("Email Sended To Admin");
+  // SendEmail({
+  //   to: "moinakhter178@gmail.com",
+  //   from: "moin@example.com",
+  //   subject: `A New Upload From ${req.user.name}`,
+  //   text: "New Upload",
+  //   html: ` <div>
+  //       <button onclick={RejectUpload(${Upload._id})}}>Reject</button>
+  //       <button onclick={ApprovedUpload(${Upload._id})}}>Approved</button>
+  //     </div>`,
+  // });
   res.status(201).json({
     success: true,
     data: Upload,
@@ -57,13 +59,10 @@ exports.updateUpload = AsyncWrapper(async (req, res, next) => {
   }
   if (req.file) {
     const Result = await Cloudinary.v2.uploader.upload(req.file.path);
-    req.body.pic = Result.secure_url;
+    // req.body.pic = Result.secure_url;
+    Upload.pic.unshift(Result.secure_url);
   }
-  Upload = _.extend(Upload, req.body);
-  const { error, isValid } = UploadValidation(Upload);
-  if (!isValid) {
-    return next(new ErrorClass("Validation Error", error, 400));
-  }
+
   await Upload.save();
   res.status(200).json({
     success: true,
@@ -119,11 +118,7 @@ exports.deleteAllUploads = AsyncWrapper(async (req, res, next) => {
 // @Route   Get api/v1/upload/:id
 // @Access  Private
 exports.getUpload = AsyncWrapper(async (req, res, next) => {
-  const Upload = await UploadModel.findOne({
-    _id: req.params.id,
-    status: "active",
-  });
-
+  const Upload = await UploadModel.findById(req.params.id);
   if (!Upload) {
     return next(
       new ErrorClass("Couldn't Find Upload With This ID", undefined, 404)
@@ -140,8 +135,7 @@ exports.getUpload = AsyncWrapper(async (req, res, next) => {
 // @Access  Private
 exports.getAll = AsyncWrapper(async (req, res, next) => {
   const Upload = await UploadModel.find({
-    active: true,
-    user: req.user.id,
+    user: req.user.id || req.body.user,
   });
   if (!Upload) {
     return next(new ErrorClass("Server Error", undefined, 500));
@@ -157,15 +151,22 @@ exports.getAll = AsyncWrapper(async (req, res, next) => {
 // @Route   Patch api/v1/upload/reject/:id
 // @Access  Just For Admins
 exports.rejectUpload = AsyncWrapper(async (req, res, next) => {
-  const Upload = await UploadModel.findById(req.params.id);
+  const Upload = await UploadModel.findById(req.params.id).populate("user");
 
   if (!Upload) {
     return next(
       new ErrorClass("Couldn't Find Upload With This ID", undefined, 404)
     );
   }
-  Upload.status = "rejected";
+  Upload.status = "declined";
   await Upload.save();
+  // Sending Email Is Remaining
+  let Time = new Date();
+  console.log(
+    `Dear ${Upload.user.name} Your Upload Request With Id ${
+      Upload._id
+    } Has Been Declined At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
+  );
   res.status(200).json({
     success: true,
     data: Upload,
@@ -176,7 +177,7 @@ exports.rejectUpload = AsyncWrapper(async (req, res, next) => {
 // @Route   Patch api/v1/upload/approved/:id
 // @Access  Just For Admins
 exports.approveUpload = AsyncWrapper(async (req, res, next) => {
-  const Upload = await UploadModel.findById(req.params.id);
+  const Upload = await UploadModel.findById(req.params.id).populate("user");
 
   if (!Upload) {
     return next(
@@ -184,6 +185,14 @@ exports.approveUpload = AsyncWrapper(async (req, res, next) => {
     );
   }
   Upload.status = "approved";
+  // Sending Email Is Remaining
+  let Time = new Date();
+  console.log(
+    `Dear ${Upload.user.name} Your Upload Request With Id ${
+      Upload._id
+    } Has Been Approved At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
+  );
+
   await Upload.save();
   res.status(200).json({
     success: true,

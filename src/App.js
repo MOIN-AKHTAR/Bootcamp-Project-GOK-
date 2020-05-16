@@ -1,11 +1,24 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import "./App.css";
+import Login from "./Components/Login/Login";
+import SignUp from "./Components/SignUp/SignUp";
+import Upload from "./Components/Upload/Upload";
+import UploadList from "./Components/UploadList/UploadList";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 class App extends Component {
   render() {
-    console.log(this.props);
-    return <div>GOK APP</div>;
+    return (
+      <BrowserRouter>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/signup" component={SignUp} />
+          <Route path="/upload" component={Upload} />
+          <Route path="/myUploads" component={UploadList} />
+          <Redirect to="/" />
+        </Switch>
+      </BrowserRouter>
+    );
   }
 }
 

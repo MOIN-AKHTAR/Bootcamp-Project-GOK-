@@ -17,12 +17,12 @@ const SignUpValidation = (data) => {
   if (Validator.isEmpty(data.email)) {
     error.email = "Please Provide Email";
   }
-  if (!Validator.isLength(data.password, { min: 6 })) {
-    error.password = "Password Must Be Atleast 6 Characters Long";
-  }
-  if (Validator.isEmpty(data.password)) {
-    error.password = "Please Provide Password";
-  }
+  // if (!Validator.isLength(data.password, { min: 6 })) {
+  //   error.password = "Password Must Be Atleast 6 Characters Long";
+  // }
+  // if (Validator.isEmpty(data.password)) {
+  //   error.password = "Please Provide Password";
+  // }
   if (Validator.isEmpty(data.office)) {
     error.office = "Please Provide Office";
   }

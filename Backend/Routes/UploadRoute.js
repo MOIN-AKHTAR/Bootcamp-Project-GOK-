@@ -37,7 +37,7 @@ Router.route("/all").get(getAll).delete(deleteAllUploads);
 
 Router.route("/:id")
   .put(Multer.single("pic"), updateUpload)
-  .delete(Protected, deleteUpload)
-  .get(Protected, getUpload);
+  .delete(deleteUpload)
+  .get(getUpload);
 
 module.exports = Router;

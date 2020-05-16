@@ -10,10 +10,12 @@ const uploadSchema = Mongoose.Schema(
       type: Number,
       default: new Date().getFullYear(),
     },
-    pic: {
-      type: String,
-      required: [true, "Please Provide Picture"],
-    },
+    pic: [
+      {
+        type: String,
+        required: [true, "Please Provide Picture"],
+      },
+    ],
     amount: {
       type: Number,
       required: [true, "Please Provide Amount"],
@@ -25,10 +27,6 @@ const uploadSchema = Mongoose.Schema(
         message: "Invalid Status-Status Can Be pending/declined/approved",
       },
       default: "pending",
-    },
-    active: {
-      type: Boolean,
-      default: true,
     },
     user: {
       type: Mongoose.Schema.ObjectId,

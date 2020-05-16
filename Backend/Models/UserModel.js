@@ -2,6 +2,7 @@ const Mongoose = require("mongoose");
 const Jwt = require("jsonwebtoken");
 const Bcryptjs = require("bcryptjs");
 const Dotenv = require("dotenv");
+const UploadModel = require("./UploadsModel");
 Dotenv.config({
   path: "../.env",
 });
@@ -23,11 +24,16 @@ const userSchema = Mongoose.Schema(
       required: [true, "Please Provide Password"],
       minlength: [6, "Password Must Be 6 Character Long"],
     },
+    hashedPassword: {
+      type: String,
+    },
     pic: {
       type: String,
-      default:
-        "https://res.cloudinary.com/dlzvhqidn/image/upload/v1589491585/ikbwwwla7b225e8msfo5.png",
+      default: "No Image Yet",
     },
+    // default:
+    // "https://res.cloudinary.com/dlzvhqidn/image/upload/v1589491585/ikbwwwla7b225e8msfo5.png",
+
     role: {
       type: String,
       default: "user",
@@ -68,7 +74,10 @@ userSchema.methods.genToken = function () {
 
 // Decrypt Hashed Password
 userSchema.methods.matchPassword = async function (Password) {
-  return await Bcryptjs.compare(Password, this.password);
+  if (this.role === "admin") {
+    return Bcryptjs.compare(Password, this.password);
+  }
+  return await Bcryptjs.compare(Password, this.hashedPassword);
 };
 
 // Encrypting Password
@@ -77,8 +86,16 @@ userSchema.pre("save", async function (next) {
     // Generate Salt Which Is Just A Series Of Random String
     const salt = await Bcryptjs.genSalt(10);
     // Hash Password With The Help Of Salt
-    this.password = await Bcryptjs.hash(this.password, salt);
+    this.hashedPassword = await Bcryptjs.hash(this.password, salt);
   }
+  next();
+});
+
+// Deleting All Upload Before Removing User Account-
+userSchema.pre("remove", async function (next) {
+  await UploadModel.deleteMany({
+    user: this._id,
+  });
   next();
 });
 

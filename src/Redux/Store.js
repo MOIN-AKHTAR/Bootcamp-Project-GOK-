@@ -1,18 +1,11 @@
 import { createStore, compose, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-const initialState = {
-  Auth: "",
-  User: "",
-};
-const Reducer = () => {
-  return initialState;
-};
+import RootReducer from "./RootReducer";
+const thunk = require("redux-thunk").default;
 export const Store = createStore(
-  Reducer,
-  null,
+  RootReducer,
+  {},
   compose(
-    window.__REDUX_DEVTOOLS_EXTENSION__ &&
-      window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(thunk)
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
   )
 );

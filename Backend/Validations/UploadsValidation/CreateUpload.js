@@ -2,8 +2,10 @@ const Validator = require("validator");
 const { isEmpty } = require("../../Utils/IsEmpty");
 const UploadValidation = (data) => {
   const error = {};
-  data.pic = !isEmpty(data.pic) ? data.pic : "";
+
+  data.pic = data.pic.trim().length > 0 ? data.pic : "";
   data.amount = !isEmpty(data.amount) ? data.amount : "";
+
   if (data.month) {
     data.month = !isEmpty(data.month) ? data.month : "";
     if (isEmpty(data.month)) {

@@ -1,0 +1,42 @@
+.wrapper {
+  margin: 1.5rem 0px;
+}
+
+.input {
+  display: block;
+  width: 90%;
+  margin: auto;
+  border: 1px solid #ccc;
+}
+.input:focus {
+  outline: none;
+  background: rgb(194, 192, 192);
+}
+
+.input::placeholder {
+  color: lightgray;
+}
+
+.label {
+  display: block;
+  width: 90%;
+  font-weight: bolder;
+  margin: 0.5rem auto;
+  font-size: 1rem;
+  font-style: oblique;
+}
+
+.errorLabel {
+  display: block;
+  width: 90%;
+  margin: 5px auto;
+  font-size: 0.8rem;
+  color: red;
+  font-style: italic;
+  font-weight: bold;
+}
+
+.invalidInput {
+  border: 1px solid red;
+  background: rgb(248, 191, 185);
+}
