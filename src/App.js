@@ -6,6 +6,8 @@ import Upload from "./Components/Upload/Upload";
 import UploadList from "./Components/UploadList/UploadList";
 import SingleUpload from "./Components/SingleUpload/SingleUpload";
 import Menu from "./Components/Menu/Menu";
+import Private from "./Components/Private/Private";
+import Profile from "./Components/Profile/Profile";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 class App extends Component {
@@ -15,10 +17,11 @@ class App extends Component {
         <Menu />
         <Switch>
           <Route path="/" exact component={Login} />
-          <Route path="/signup" component={SignUp} />
-          <Route path="/upload" component={Upload} />
-          <Route exact path="/myUploads" component={UploadList} />
-          <Route path="/myUpload/:uploadId" component={SingleUpload} />
+          <Private path="/signup" component={SignUp} />
+          <Private path="/upload" component={Upload} />
+          <Private exact path="/myUploads" component={UploadList} />
+          <Private path="/myUpload/:uploadId" component={SingleUpload} />
+          <Private path="/myProfile" component={Profile} />
           <Redirect to="/" />
         </Switch>
       </BrowserRouter>

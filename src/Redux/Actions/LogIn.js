@@ -14,7 +14,6 @@ export const loginUser = (Data) => (Dispatch) => {
       setCurrentUser(token, Dispatch);
     })
     .catch((err) => {
-      console.log(err.response.data);
       Dispatch({
         type: GET_ERROR,
         Payload: err.response.data.message,
@@ -36,8 +35,12 @@ export const setCurrentUser = (token, Dispatch) => {
         Payload: res.data.data,
       });
     })
-    .catch((err) => console.log(err));
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
 };
-export const clearError = (_) => ({
-  type: CLEAR_ERROR,
-});

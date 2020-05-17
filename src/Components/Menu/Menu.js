@@ -67,9 +67,9 @@ function MenuBar({ history }) {
             <li>
               <NavLink
                 exact
-                to="/myProfile"
+                to="/myprofile"
                 className="nav-link"
-                style={isActive(history, "/myProfile")}
+                style={isActive(history, "/myprofile")}
               >
                 Profile
               </NavLink>

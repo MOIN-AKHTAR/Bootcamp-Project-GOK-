@@ -87,7 +87,6 @@ class Login extends Component {
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.auth.isAuthenticated) {
       // If User Is Authenticated Move To Upload Page
       this.props.history.push("/upload");
