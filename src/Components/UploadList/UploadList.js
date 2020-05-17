@@ -9,6 +9,7 @@ class UploadList extends Component {
   state = {
     error: "",
     loading: true,
+    uploads: null,
   };
   componentDidMount() {
     this.props.Get_Uploads();
@@ -18,6 +19,7 @@ class UploadList extends Component {
     if (nextProps.upload.uploads) {
       this.setState({
         loading: false,
+        uploads: nextProps.upload.uploads,
       });
     }
     if (nextProps.error) {
@@ -30,8 +32,8 @@ class UploadList extends Component {
 
   render() {
     let Element;
-    const { uploads, loading } = this.props.upload;
-    if (this.state.loading || uploads === null) {
+    // const { uploads } = this.props.upload;
+    if (this.state.loading || this.state.uploads === null) {
       Element = (
         <div>
           <Spinner asOverlay />
@@ -39,7 +41,7 @@ class UploadList extends Component {
         </div>
       );
     } else {
-      Element = <UploadItem uploads={uploads} />;
+      Element = <UploadItem uploads={this.state.uploads} />;
     }
     return (
       <div className="container">

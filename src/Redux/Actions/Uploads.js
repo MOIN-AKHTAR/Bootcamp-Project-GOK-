@@ -7,9 +7,9 @@ const {
   GET_UPLOAD,
 } = require("../Types/Types");
 const Axios = require("axios");
-const token = localStorage.getItem("jwt_token");
 
 export const Upload_Post = (Data) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
   Dispatch({
     type: CLEAR_ERROR,
   });
@@ -44,6 +44,7 @@ export const Upload_Post = (Data) => (Dispatch) => {
 };
 
 export const Get_Uploads = (_) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
   Dispatch({
     type: LOAD_UPLOADS,
   });
@@ -70,6 +71,7 @@ export const Get_Uploads = (_) => (Dispatch) => {
 };
 
 export const Get_Upload = (id) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
   Dispatch({
     type: LOAD_UPLOADS,
   });
@@ -95,7 +97,8 @@ export const Get_Upload = (id) => (Dispatch) => {
     });
 };
 
-export const UpdateUpload = (Id, Data, histoy) => (Dispatch) => {
+export const UpdateUpload = (Id, Data) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
   Dispatch({
     type: LOAD_UPLOADS,
   });
@@ -107,10 +110,19 @@ export const UpdateUpload = (Id, Data, histoy) => (Dispatch) => {
     },
   })
     .then((res) => {
-      console.log(res.data);
-      histoy.push("/myUploads");
+      Dispatch({
+        type: GET_UPLOAD,
+        Payload: res.data.data,
+      });
+      // console.log(res.data);
+      // histoy.push("/myUploads");
     })
     .catch((err) => {
-      console.log(err.response.data);
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      });
     });
 };

@@ -10,7 +10,7 @@ import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
 import Model from "../../UI/Model/Model";
 let image;
-let showModel = false;
+// let showModel = false;
 let prevId = 1;
 class Upload extends Component {
   constructor(props) {
@@ -21,6 +21,7 @@ class Upload extends Component {
       pic: "",
       error: "",
       loading: false,
+      showModel: false,
       option: [
         { value: 0, title: "January" },
         { value: 1, title: "February" },
@@ -41,7 +42,7 @@ class Upload extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.upload.upload._id && nextProps.upload.upload._id !== prevId) {
       prevId = nextProps.upload.upload._id;
-      showModel = true;
+      // showModel = true;
       this.setState({
         month: 0,
         pic: "",
@@ -84,11 +85,11 @@ class Upload extends Component {
   };
 
   changeShow = (e) => {
-    this.props.history.replace("/myUploads");
-    showModel = false;
+    // showModel = false;
     this.setState({
       showModel: false,
     });
+    this.props.history.push("/myUploads");
   };
 
   render() {
@@ -98,8 +99,8 @@ class Upload extends Component {
         <div className="row mt-5">
           <div className="col-md-10 m-auto ">
             <React.Fragment>
-              {showModel && (
-                <Model show={showModel}>
+              {this.state.showModel && (
+                <Model show={this.state.showModel}>
                   <h3>Uploaded Successfully!!!</h3>
                   <button
                     type="button"

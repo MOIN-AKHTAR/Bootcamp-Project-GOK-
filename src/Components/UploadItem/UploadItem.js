@@ -3,9 +3,20 @@ import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
 class UploadItem extends Component {
-  state = {
-    uploads: this.props.uploads,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      uploads: this.props.uploads,
+    };
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (nextProps.uploads !== this.props.uploads) {
+      this.setState({
+        uploads: nextProps.uploads,
+      });
+    }
+  }
 
   showRecord = (id) => console.log(id);
 
@@ -57,7 +68,6 @@ class UploadItem extends Component {
         </div>
       );
     }
-    console.log(this.props);
     return (
       <div className="container">
         <div className="row">

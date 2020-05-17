@@ -6,7 +6,7 @@ export const ErrorReducer = (State = initialState, Action) => {
       return Action.Payload;
     }
     case CLEAR_ERROR: {
-      return {};
+      return null;
     }
     default: {
       return State;

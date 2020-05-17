@@ -26,7 +26,7 @@ class SingleUpload extends Component {
   state = {
     loading: true,
     error: "",
-    upload: "",
+    upload: null,
   };
 
   // To Update Image Of Upload
@@ -39,8 +39,8 @@ class SingleUpload extends Component {
     formData.append("pic", Image);
     this.props.UpdateUpload(
       this.state.upload._id,
-      formData,
-      this.props.history
+      formData
+      // this.props.history
     );
   };
 
@@ -56,6 +56,7 @@ class SingleUpload extends Component {
 
   // Getting Data From Stroe After Dispatch
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.error);
     if (nextProps.error) {
       this.setState({
         error: nextProps.error.message,
@@ -72,37 +73,48 @@ class SingleUpload extends Component {
   }
 
   render() {
-    console.log(Image);
     let Element;
-    const { upload } = this.props.upload;
-    if (this.state.loading || upload === null) {
+    // const { upload } = this.props.upload;
+    if (this.state.upload === null) {
       Element = (
         <div>
           <Spinner asOverlay />
           <BackDrop />
         </div>
       );
-    } else if (!this.state.loading && upload !== null && !this.state.error) {
+    } else if (
+      // !this.state.loading &&
+      this.state.upload !== null ||
+      !this.state.error
+    ) {
       Element = (
-        <div className="col-md-6 m-auto">
-          <form onSubmit={this.onSubmit}>
-            <UploadImage
-              Image={this.state.upload.pic[0]}
-              onInput={this.onInput}
-            />
-            <div className="mt-3">
-              <h3>ID:{this.state.upload._id}</h3>
-              <h3>
-                Created At :
-                {new Date(this.state.upload.createdAt).toDateString()}
-              </h3>
-              <h3>Month:{MONTH[this.state.upload.month]}</h3>
-              <h3>Year: {this.state.upload.year}</h3>
-              <h3>Status: {this.state.upload.status}</h3>
-              <h3>Amount: {this.state.upload.amount}</h3>
-              <Button isValid={true} title="Update" />
-            </div>
-          </form>
+        <div>
+          {this.state.loading && (
+            <>
+              <BackDrop />
+              <Spinner asOverlay />
+            </>
+          )}
+          <div className="col-md-6 m-auto">
+            <form onSubmit={this.onSubmit}>
+              <UploadImage
+                Image={this.state.upload.pic[0]}
+                onInput={this.onInput}
+              />
+              <div className="mt-3">
+                <h3>ID:{this.state.upload._id}</h3>
+                <h3>
+                  Created At :
+                  {new Date(this.state.upload.createdAt).toDateString()}
+                </h3>
+                <h3>Month:{MONTH[this.state.upload.month]}</h3>
+                <h3>Year: {this.state.upload.year}</h3>
+                <h3>Status: {this.state.upload.status}</h3>
+                <h3>Amount: {this.state.upload.amount}</h3>
+                <Button isValid={true} title="Update" />
+              </div>
+            </form>
+          </div>
         </div>
       );
     }

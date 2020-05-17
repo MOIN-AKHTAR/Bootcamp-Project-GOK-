@@ -87,11 +87,11 @@ class Login extends Component {
   };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
     if (nextProps.auth.isAuthenticated) {
       // If User Is Authenticated Move To Upload Page
       this.props.history.push("/upload");
     }
-    console.log(nextProps);
     if (nextProps.error) {
       // If Any Error Show Errors On Login Form
       this.setState({
@@ -106,7 +106,6 @@ class Login extends Component {
     this.setState({
       loading: true,
     });
-    // console.log(object)
     const Data = {
       email: this.state.formData.email.value,
       password: this.state.formData.password.value,
