@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import DropDown from "../../UI/DropDown/DropDown";
+import YearDropDown from "../../UI/YearDropDown/YearDropDown";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
 
@@ -7,8 +9,39 @@ class UploadItem extends Component {
     super(props);
     this.state = {
       uploads: this.props.uploads,
+      month: "all",
+      year: new Date().getFullYear(),
+      option: [
+        { value: "all", title: "All" },
+        { value: 0, title: "January" },
+        { value: 1, title: "February" },
+        { value: 2, title: "March" },
+        { value: 3, title: "April" },
+        { value: 4, title: "May" },
+        { value: 5, title: "June" },
+        { value: 6, title: "July" },
+        { value: 7, title: "August" },
+        { value: 8, title: "September" },
+        { value: 9, title: "October" },
+        { value: 10, title: "November" },
+        { value: 11, title: "December" },
+      ],
     };
   }
+
+  onChangeHandler = (e) => {
+    this.props.loadByMonth(e.target.value);
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  onChangeYear = (e) => {
+    this.props.loadByYear(e.target.value);
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.uploads !== this.props.uploads) {
@@ -34,6 +67,7 @@ class UploadItem extends Component {
       Element = (
         <div className="text-center mt-1">
           <h1 className="text-primary my-2">My Uploads</h1>
+
           <table className="table">
             <thead className="thead-dark ">
               <tr>
@@ -80,6 +114,23 @@ class UploadItem extends Component {
             >
               Back
             </button>
+            <div className="mb-2 m-auto d-flex">
+              <DropDown
+                title="Search By Month"
+                id="month"
+                name="month"
+                Arr={this.state.option}
+                onChange={this.onChangeHandler}
+                value={this.state.month}
+              />
+              <YearDropDown
+                title="Search By Year"
+                id="year"
+                name="year"
+                value={this.state.year}
+                onChangeHandler={this.onChangeYear}
+              />
+            </div>
             {Element}
           </div>
         </div>

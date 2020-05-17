@@ -126,3 +126,57 @@ export const UpdateUpload = (Id, Data) => (Dispatch) => {
       });
     });
 };
+
+export const GetUploadViaMonth = (Month) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.get(`http://localhost:5000/api/v1/upload//history/month/${Month}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      Dispatch({
+        type: SET_UPLOADS,
+        Payload: res.data.data,
+      });
+    })
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+export const GetUploadViaYear = (year) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.get(`http://localhost:5000/api/v1/upload//history/year/${year}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      Dispatch({
+        type: SET_UPLOADS,
+        Payload: res.data.data,
+      });
+    })
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};

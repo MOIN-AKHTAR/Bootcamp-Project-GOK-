@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
 import UploadItem from "../UploadItem/UploadItem";
-import { Get_Uploads } from "../../Redux/Actions/Uploads";
+import {
+  Get_Uploads,
+  GetUploadViaMonth,
+  GetUploadViaYear,
+} from "../../Redux/Actions/Uploads";
 import { connect } from "react-redux";
 
 class UploadList extends Component {
@@ -14,6 +18,18 @@ class UploadList extends Component {
   componentDidMount() {
     this.props.Get_Uploads();
   }
+
+  uploadByMonth = (month) => {
+    if (month === "all") {
+      this.props.Get_Uploads();
+    } else {
+      this.props.GetUploadViaMonth(month);
+    }
+  };
+
+  uploadByYear = (year) => {
+    this.props.GetUploadViaYear(year);
+  };
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.upload.uploads) {
@@ -41,7 +57,13 @@ class UploadList extends Component {
         </div>
       );
     } else {
-      Element = <UploadItem uploads={this.state.uploads} />;
+      Element = (
+        <UploadItem
+          uploads={this.state.uploads}
+          loadByMonth={this.uploadByMonth}
+          loadByYear={this.uploadByYear}
+        />
+      );
     }
     return (
       <div className="container">
@@ -66,4 +88,8 @@ const mapStateToProps = (State) => ({
   error: State.error,
 });
 
-export default connect(mapStateToProps, { Get_Uploads })(UploadList);
+export default connect(mapStateToProps, {
+  Get_Uploads,
+  GetUploadViaMonth,
+  GetUploadViaYear,
+})(UploadList);

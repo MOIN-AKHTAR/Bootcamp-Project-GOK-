@@ -207,7 +207,7 @@ exports.getHistoryViaMonth = AsyncWrapper(async (req, res, next) => {
   const Uploads = await UploadModel.find({
     month: req.params.month,
     user: req.user.id,
-  });
+  }).sort({ year: 1, amount: 1 });
   if (!Uploads) {
     return next(new ErrorClass("Server Error", undefined, 500));
   }
@@ -225,7 +225,7 @@ exports.getHistoryViaYear = AsyncWrapper(async (req, res, next) => {
   const Uploads = await UploadModel.find({
     year: req.params.year,
     user: req.user.id,
-  });
+  }).sort({ month: 1, amount: 1 });
   if (!Uploads) {
     return next(new ErrorClass("Server Error", undefined, 500));
   }
