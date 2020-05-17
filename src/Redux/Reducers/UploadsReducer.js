@@ -1,4 +1,9 @@
-import { POST_UPLOAD, LOAD_UPLOADS, SET_UPLOADS } from "../Types/Types";
+import {
+  POST_UPLOAD,
+  LOAD_UPLOADS,
+  SET_UPLOADS,
+  GET_UPLOAD,
+} from "../Types/Types";
 const initialState = {
   upload: {},
   uploads: null,
@@ -24,6 +29,13 @@ export const UploadReducer = (State = initialState, Action) => {
         ...State,
         loading: false,
         uploads: Action.Payload,
+      };
+    }
+    case GET_UPLOAD: {
+      return {
+        ...State,
+        loading: false,
+        upload: Action.Payload,
       };
     }
     default: {

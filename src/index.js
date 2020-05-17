@@ -9,6 +9,7 @@ import JWT_DECODE from "jwt-decode";
 import { setCurrentUser } from "./Redux/Actions/LogIn";
 
 let JWT = localStorage.getItem("jwt_token");
+
 // Keeping User LoggedIn Even We Hard Refresh
 if (JWT) {
   // Decoding/Extracting Info From Token

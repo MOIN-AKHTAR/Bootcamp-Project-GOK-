@@ -84,6 +84,7 @@ class Upload extends Component {
   };
 
   changeShow = (e) => {
+    this.props.history.replace("/myUploads");
     showModel = false;
     this.setState({
       showModel: false,
