@@ -14,3 +14,5 @@ export const CREATE_USER = "CREATE_USER";
 export const GET_USER = "GET_USER";
 export const GET_USERS = "GET_USERS";
 export const LOAD_USER = "LOAD_USER";
+export const GET_SINGLE_USER = "GET_SINGLE_USER";
+export const UPDATE_USER = "UPDATE_USER";

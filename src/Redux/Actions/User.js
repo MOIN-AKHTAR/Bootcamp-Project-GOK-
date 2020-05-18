@@ -4,6 +4,8 @@ import {
   GET_ERROR,
   GET_USERS,
   LOAD_USER,
+  GET_SINGLE_USER,
+  UPDATE_USER,
 } from "../Types/Types";
 import Axios from "axios";
 
@@ -67,4 +69,60 @@ export const Load_Users = (_) => (Dispatch) => {
         },
       });
     });
+};
+
+export const Get_Single_User = (Id) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_USER,
+  });
+  Axios.get(`http://localhost:5000/api/v1/user/${Id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: GET_SINGLE_USER,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+// http://localhost:5000/api/v1/user/:userid/office/
+export const Update_User_Office = (userId, newOffice) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_USER,
+  });
+  Axios.put(`http://localhost:5000/api/v1/user/${userId}/office/`, newOffice, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: UPDATE_USER,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
 };

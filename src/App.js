@@ -8,7 +8,9 @@ import SingleUpload from "./Components/SingleUpload/SingleUpload";
 import Menu from "./Components/Menu/Menu";
 import Profile from "./Components/Profile/Profile";
 import Users from "./Components/Users/Users";
+import GetSingleUser from "./Components/GetSingleUser/GetSingleUser";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+
 const JWT = require("jwt-decode");
 
 const isAuthenticated = () => {
@@ -24,14 +26,7 @@ const isAuthenticated = () => {
 class App extends Component {
   render() {
     let Element;
-    // if (!isAuthenticated()) {
-    //   Element = (
-    //     <Switch>
-    //       <Route path="/" exact component={Login} />
-    //       <Redirect to="/" />
-    //     </Switch>
-    //   );
-    // }
+
     if (
       isAuthenticated() &&
       JWT(localStorage.getItem("jwt_token")).role === "user"
@@ -52,6 +47,7 @@ class App extends Component {
       Element = (
         <Switch>
           <Route path="/signup" component={SignUp} />
+          <Route path="/user/:userId" component={GetSingleUser} />
           <Route path="/users" component={Users} />
           <Route path="/myprofile" component={Profile} />
           <Redirect to="/signup" />

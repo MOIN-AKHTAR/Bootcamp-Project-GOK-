@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Classes from "../Login/Login.module.css";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
-import Validator from "validator";
 import { Create_User } from "../../Redux/Actions/User";
 import { connect } from "react-redux";
 import BackDrop from "../../UI/BackDrop/BackDrop";
