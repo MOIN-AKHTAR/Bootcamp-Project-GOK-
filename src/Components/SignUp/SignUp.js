@@ -36,7 +36,6 @@ class SignUp extends Component {
       });
     }
     if (nextProps.error) {
-      console.log(nextProps.error);
       if (nextProps.error.message) {
         this.setState({
           message: nextProps.error.message,

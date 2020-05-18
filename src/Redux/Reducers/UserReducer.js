@@ -1,7 +1,8 @@
-import { CREATE_USER, LOAD_USER } from "../Types/Types";
+import { CREATE_USER, LOAD_USER, GET_USERS } from "../Types/Types";
 const initialState = {
   user: null,
-  users: [],
+  // user:[]
+  users: null,
   loading: false,
 };
 
@@ -16,8 +17,14 @@ export const UserReducer = (State = initialState, Action) => {
     case CREATE_USER: {
       return {
         ...State,
-        users: [...State.users, Action.Payload],
         user: Action.Payload,
+        loading: false,
+      };
+    }
+    case GET_USERS: {
+      return {
+        ...State,
+        users: Action.Payload,
         loading: false,
       };
     }

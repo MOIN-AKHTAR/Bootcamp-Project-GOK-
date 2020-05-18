@@ -7,6 +7,7 @@ import UploadList from "./Components/UploadList/UploadList";
 import SingleUpload from "./Components/SingleUpload/SingleUpload";
 import Menu from "./Components/Menu/Menu";
 import Profile from "./Components/Profile/Profile";
+import Users from "./Components/Users/Users";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 const JWT = require("jwt-decode");
 
@@ -51,6 +52,7 @@ class App extends Component {
       Element = (
         <Switch>
           <Route path="/signup" component={SignUp} />
+          <Route path="/users" component={Users} />
           <Route path="/myprofile" component={Profile} />
           <Redirect to="/signup" />
         </Switch>

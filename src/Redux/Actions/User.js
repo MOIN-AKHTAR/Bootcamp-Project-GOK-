@@ -1,4 +1,10 @@
-import { CREATE_USER, CLEAR_ERROR, GET_ERROR } from "../Types/Types";
+import {
+  CREATE_USER,
+  CLEAR_ERROR,
+  GET_ERROR,
+  GET_USERS,
+  LOAD_USER,
+} from "../Types/Types";
 import Axios from "axios";
 
 export const Create_User = (data) => (Dispatch) => {
@@ -14,7 +20,6 @@ export const Create_User = (data) => (Dispatch) => {
     },
   })
     .then((res) => {
-      console.log(res.data.data);
       Dispatch({
         type: CREATE_USER,
         Payload: res.data.data,
@@ -34,5 +39,32 @@ export const Create_User = (data) => (Dispatch) => {
           },
         });
       }
+    });
+};
+
+export const Load_Users = (_) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_USER,
+  });
+  Axios.get("http://localhost:5000/api/v1/user/", {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      Dispatch({
+        type: GET_USERS,
+        Payload: res.data.data,
+      });
+    })
+    .catch((err) => {
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      });
     });
 };

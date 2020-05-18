@@ -52,6 +52,15 @@ function MenuBar({ history }) {
               </li>
               <li>
                 <NavLink
+                  to="/users"
+                  style={isActive(history, "/users")}
+                  className="nav-link"
+                >
+                  Users
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
                   to="/myprofile"
                   style={isActive(history, "/myprofile")}
                   className="nav-link"
