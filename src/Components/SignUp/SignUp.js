@@ -3,173 +3,150 @@ import Classes from "../Login/Login.module.css";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
 import Validator from "validator";
-// import BackDrop from "../../UI/BackDrop/BackDrop";
-
-export default class Login extends Component {
+import { Create_User } from "../../Redux/Actions/User";
+import { connect } from "react-redux";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import Spinner from "../../UI/Spinner/Spinner";
+let prevId = 1;
+class SignUp extends Component {
   state = {
-    formData: {
-      name: {
-        elementConfig: {
-          type: "text",
-          placeholder: "Enter Your Name",
-          title: "Name",
-          id: "name",
-          name: "name",
-        },
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-        value: "",
-      },
-      email: {
-        elementConfig: {
-          type: "email",
-          placeholder: "Enter Your Email",
-          title: "Email",
-          id: "email",
-          name: "email",
-        },
-        validation: {
-          required: true,
-          isEmail: true,
-        },
-        valid: false,
-        touched: false,
-        value: "",
-      },
-      password: {
-        elementConfig: {
-          type: "password",
-          placeholder: "Enter Your Password",
-          title: "Password",
-          id: "password",
-          name: "password",
-        },
-        validation: {
-          required: true,
-          minlength: 6,
-        },
-        valid: false,
-        touched: false,
-        value: "",
-      },
-      office: {
-        elementConfig: {
-          type: "text",
-          placeholder: "Enter Your Office",
-          title: "Office",
-          id: "office",
-          name: "office",
-        },
-        validation: {
-          required: true,
-        },
-        valid: false,
-        touched: false,
-        value: "",
-      },
-      phone_number: {
-        elementConfig: {
-          type: "text",
-          placeholder: "Enter Your Phone Number",
-          title: "Phone Number",
-          id: "phone_number",
-          name: "phone_number",
-        },
-        validation: {
-          required: true,
-          minlength: 9,
-        },
-        valid: false,
-        touched: false,
-        value: "",
-      },
-    },
-    fomValid: false,
+    name: "",
+    email: "",
+    office: "",
+    phone_number: "",
+    year: new Date().getFullYear(),
+    message: "",
+    loading: false,
+    error: "",
   };
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    if (nextProps.user.user && nextProps.user.user._id !== prevId) {
+      prevId = nextProps.user.user._id;
+      this.setState({
+        name: "",
+        email: "",
+        office: "",
+        phone_number: "",
+        year: new Date().getFullYear(),
+        message: "",
+        loading: false,
+        error: "",
+      });
+    }
+    if (nextProps.error) {
+      console.log(nextProps.error);
+      if (nextProps.error.message) {
+        this.setState({
+          message: nextProps.error.message,
+          loading: false,
+        });
+      } else if (nextProps.error) {
+        this.setState({
+          error: nextProps.error,
+          loading: false,
+        });
+      }
+    }
+  }
+
   // It Will Check Validation For Inputs
-  validationChecking = (value, rules) => {
-    let isValid = true;
-    if (rules.required) {
-      isValid = value.trim() !== "" && isValid;
-    }
-    if (rules.isEmail) {
-      isValid = Validator.isEmail(value) && isValid;
-    }
-    if (rules.minlength) {
-      isValid = value.trim().length >= rules.minlength && isValid;
-    }
-    return isValid;
+  // validationChecking = (value, rules) => {
+  //   let isValid = true;
+  //   if (rules.required) {
+  //     isValid = value.trim() !== "" && isValid;
+  //   }
+  //   if (rules.isEmail) {
+  //     isValid = Validator.isEmail(value) && isValid;
+  //   }
+  //   if (rules.minlength) {
+  //     isValid = value.trim().length >= rules.minlength && isValid;
+  //   }
+  //   return isValid;
+  // };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.setState({
+      loading: true,
+    });
+    const data = {
+      name: this.state.name,
+      email: this.state.email,
+      phone_number: this.state.phone_number,
+      office: this.state.office,
+    };
+    this.props.Create_User(data);
   };
 
   // Change Inputs
   onChangeHandler = (e) => {
-    const CopyStateForm = { ...this.state.formData };
-    const CopyStateElement = { ...CopyStateForm[e.target.name] };
-    CopyStateElement.value = e.target.value;
-    CopyStateElement.valid = this.validationChecking(
-      CopyStateElement.value,
-      CopyStateElement.validation
-    );
-    CopyStateElement.touched = true;
-    CopyStateForm[e.target.name] = CopyStateElement;
-    let formIsValid = true;
-    for (const key in this.state.formData) {
-      formIsValid = this.state.formData[key].valid && formIsValid;
-    }
     this.setState({
-      formData: CopyStateForm,
-      fomValid: formIsValid,
+      [e.target.name]: e.target.value,
     });
   };
 
   render() {
+    const {
+      phone_number: phone_Err,
+      email: email_Err,
+      office: office_Err,
+      name: name_Err,
+    } = this.state.error;
     return (
       <div className="container">
         <div className="row mt-4">
           <div className="col-md-8 m-auto ">
+            {this.state.loading && (
+              <div>
+                <Spinner asOverlay />
+                <BackDrop />
+              </div>
+            )}
             <h1 className="text-center mb-2 text-primary">SignUp</h1>
             <div className={Classes.form}>
-              <form>
+              <form onSubmit={this.onSubmit}>
                 <Input
-                  {...this.state.formData.name.elementConfig}
-                  value={this.state.formData.name.value}
+                  placeholder="Enter Name"
+                  name="name"
+                  id="name"
+                  title="Name"
+                  value={this.state.name}
                   onChange={this.onChangeHandler}
-                  valid={this.state.formData.name.valid}
-                  touched={this.state.formData.name.touched}
+                  error={name_Err}
+                />
+
+                <Input
+                  placeholder="Enter Email"
+                  name="email"
+                  id="email"
+                  title="Email"
+                  value={this.state.email}
+                  onChange={this.onChangeHandler}
+                  error={email_Err}
+                />
+
+                <Input
+                  placeholder="Enter Office"
+                  name="office"
+                  id="office"
+                  title="Office"
+                  value={this.state.office}
+                  onChange={this.onChangeHandler}
+                  error={office_Err}
                 />
                 <Input
-                  {...this.state.formData.email.elementConfig}
-                  value={this.state.formData.email.value}
+                  placeholder="Enter Number"
+                  name="phone_number"
+                  id="phone_number"
+                  title="Number"
+                  value={this.state.phone_number}
                   onChange={this.onChangeHandler}
-                  valid={this.state.formData.email.valid}
-                  touched={this.state.formData.email.touched}
+                  error={phone_Err}
                 />
-                <Input
-                  {...this.state.formData.password.elementConfig}
-                  value={this.state.formData.password.value}
-                  onChange={this.onChangeHandler}
-                  valid={this.state.formData.password.valid}
-                  touched={this.state.formData.password.touched}
-                />
-                <Input
-                  {...this.state.formData.office.elementConfig}
-                  value={this.state.formData.office.value}
-                  onChange={this.onChangeHandler}
-                  valid={this.state.formData.office.valid}
-                  touched={this.state.formData.office.touched}
-                />
-                <Input
-                  {...this.state.formData.phone_number.elementConfig}
-                  value={this.state.formData.phone_number.value}
-                  onChange={this.onChangeHandler}
-                  valid={this.state.formData.phone_number.valid}
-                  touched={this.state.formData.phone_number.touched}
-                />
-                <Button title="SignUp" isValid={this.state.fomValid} />
+
+                <Button title="SignUp" isValid={true} />
               </form>
             </div>
           </div>
@@ -178,3 +155,10 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = (State) => ({
+  user: State.user,
+  error: State.error,
+});
+
+export default connect(mapStateToProps, { Create_User })(SignUp);

@@ -74,9 +74,9 @@ userSchema.methods.genToken = function () {
 
 // Decrypt Hashed Password
 userSchema.methods.matchPassword = async function (Password) {
-  if (this.role === "admin") {
-    return Bcryptjs.compare(Password, this.password);
-  }
+  // if (this.role === "admin") {
+  //   return Bcryptjs.compare(Password, this.password);
+  // }
   return await Bcryptjs.compare(Password, this.hashedPassword);
 };
 

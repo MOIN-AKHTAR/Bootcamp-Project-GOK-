@@ -22,6 +22,8 @@ const Route = Express.Router();
 
 Route.route("/login").post(Login);
 
+// Route.route("/signup").post(SignUp);
+
 // Protected Routes
 Route.use(Protected);
 Route.route("/").get(grantAccess("admin"), GetUsers);

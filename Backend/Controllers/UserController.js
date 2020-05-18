@@ -15,6 +15,7 @@ require("../Middlewares/Cloudinary");
 // @Access  Public
 exports.SignUp = AsyncWrapper(async (req, res, next) => {
   // Validating Inputs
+  console.log(req.body);
   const { error, isValid } = SignUpValidation(req.body);
   if (!isValid) {
     return next(new ErrorClass("Validation Error", error, 400));
@@ -24,8 +25,8 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
   if (AlreadyUser) {
     return next(
       new ErrorClass(
-        "This Email Is Already Taken Use Anyother Email",
-        undefined,
+        "Dupliaction Error",
+        { email: "This Email Is Already Taken Use Anyother Email" },
         400
       )
     );
@@ -46,10 +47,12 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
   console.log(
     `Dear ${
       User.name
-    } Your Account Has Been Created At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
+    } Your Account Has Been Created At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()} With Following Information`
   );
+  console.log(User);
   res.status(200).json({
     success: true,
+    data: User,
   });
 });
 

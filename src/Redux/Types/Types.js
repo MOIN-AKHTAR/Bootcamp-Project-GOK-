@@ -1,4 +1,3 @@
-export const CREATE_USER = "CREATE_USER";
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
 export const GET_ERROR = "GET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
@@ -11,3 +10,7 @@ export const UPDATE_UPLOAD = "UPDATE_UPLOAD";
 export const GET_PROFILE = "GET_PROFILE";
 export const LOAD_PROFILE = "LOAD_PROFILE";
 export const UPDATE_PROFILE = "UPDATE_PROFILE";
+export const CREATE_USER = "CREATE_USER";
+export const GET_USER = "GET_USER";
+export const GET_USERS = "GET_USERS";
+export const LOAD_USER = "LOAD_USER";

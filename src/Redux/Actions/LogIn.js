@@ -35,12 +35,13 @@ export const setCurrentUser = (token, Dispatch) => {
         Payload: res.data.data,
       });
     })
-    .catch((err) =>
+    .catch((err) => {
+      console.log(err.response.data);
       Dispatch({
         type: GET_ERROR,
         Payload: {
           message: err.response.data.message,
         },
-      })
-    );
+      });
+    });
 };

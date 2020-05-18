@@ -3,9 +3,11 @@ import { AuthReducer } from "./Reducers/AuthReducer";
 import { ErrorReducer } from "./Reducers/ErrorReducer";
 import { UploadReducer } from "./Reducers/UploadsReducer";
 import { ProfileReducer } from "./Reducers/ProfileReducer";
+import { UserReducer } from "./Reducers/UserReducer";
 export default combineReducers({
   auth: AuthReducer,
   error: ErrorReducer,
   upload: UploadReducer,
   profile: ProfileReducer,
+  user: UserReducer,
 });
