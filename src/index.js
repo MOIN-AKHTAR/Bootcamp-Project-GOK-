@@ -30,4 +30,9 @@ ReactDOM.render(
   </Provider>,
   document.getElementById("root")
 );
+
+// To Avoid Extra Hard Loading
+if (module.hot) {
+  module.hot.accept();
+}
 serviceWorker.unregister();

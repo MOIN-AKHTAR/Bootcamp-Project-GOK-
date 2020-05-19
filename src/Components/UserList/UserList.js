@@ -1,13 +1,59 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import {
+  Get_User_Via_Office,
+  Get_User_Via_Year,
+  Load_Users,
+} from "../../Redux/Actions/User";
+import { DatePicker } from "antd";
+import { connect } from "react-redux";
+import "antd/dist/antd.css";
 
 class UserList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       Users: this.props.Users,
+      year: new Date().getFullYear(),
+      officeName: "",
+      error: "",
     };
   }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.error) {
+      this.setState({
+        error: nextProps.error.message,
+      });
+    } else if (nextProps.user.users) {
+      this.setState({
+        Users: nextProps.user.users,
+      });
+    }
+  }
+
+  // To Change OfficeName
+  onChange = (e) => {
+    if (e.target.value.trim().length > 0) {
+      this.props.Get_User_Via_Office(e.target.value);
+    }
+    this.setState({
+      officeName: e.target.value,
+    });
+  };
+
+  // To Chnage Year
+  changeYear = (Value) => {
+    if (Value !== null) {
+      this.setState({
+        year: new Date(Value).getFullYear(),
+      });
+      this.props.Get_User_Via_Year(new Date(Value).getFullYear());
+    } else {
+      this.props.Load_Users();
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -20,6 +66,38 @@ class UserList extends Component {
           >
             Back
           </button>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "1rem",
+          }}
+        >
+          <input
+            onChange={this.onChange}
+            placeholder="Search By Office"
+            value={this.state.officeName}
+            style={{
+              width: "40%",
+              marginRight: "1rem",
+              outline: "none",
+              border: "1px solid gray",
+              height: "2.5rem",
+              fontSize: "1.5rem",
+            }}
+          />
+          <DatePicker
+            picker="year"
+            placeholder="Search User By Year"
+            onChange={this.changeYear}
+            style={{
+              width: "40%",
+              outline: "none",
+              border: "1px solid gray",
+              height: "2.5rem",
+            }}
+          />
         </div>
         {this.state.Users.length === 0 ? (
           <h1 className="text-center text-danger my-5">
@@ -64,4 +142,13 @@ class UserList extends Component {
   }
 }
 
-export default withRouter(UserList);
+const mapStateToProps = (State) => ({
+  user: State.user,
+  error: State.error,
+});
+
+export default connect(mapStateToProps, {
+  Get_User_Via_Office,
+  Get_User_Via_Year,
+  Load_Users,
+})(withRouter(UserList));

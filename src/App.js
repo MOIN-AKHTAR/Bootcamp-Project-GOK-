@@ -6,6 +6,7 @@ import Users from "./Components/Users/Users";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
 import Upload from "./Components/Upload/Upload";
+import Private from "./Components/Private/Private";
 import Profile from "./Components/Profile/Profile";
 import UploadList from "./Components/UploadList/UploadList";
 import SingleUpload from "./Components/SingleUpload/SingleUpload";
@@ -32,10 +33,10 @@ class App extends Component {
     ) {
       Element = (
         <>
-          <Route path="/upload" component={Upload} />
-          <Route exact path="/myUploads" component={UploadList} />
-          <Route path="/myUpload/:uploadId" component={SingleUpload} />
-          <Route path="/myprofile" component={Profile} />
+          <Private path="/upload" component={Upload} />
+          <Private exact path="/myUploads" component={UploadList} />
+          <Private path="/myUpload/:uploadId" component={SingleUpload} />
+          <Private path="/myprofile" component={Profile} />
           <Redirect to="/upload" />
         </>
       );
@@ -45,15 +46,15 @@ class App extends Component {
     ) {
       Element = (
         <>
-          <Route path="/signup" component={SignUp} />
-          <Route exact path="/user/:userId" component={GetSingleUser} />
-          <Route
+          <Private path="/signup" component={SignUp} />
+          <Private exact path="/user/:userId" component={GetSingleUser} />
+          <Private
             path="/user/:userId/uploads"
             component={GetSingleUserUploads}
           />
-          <Route path="/users" component={Users} />
-          <Route path="/myUpload/:uploadId" component={SingleUpload} />
-          <Route path="/myprofile" component={Profile} />
+          <Private path="/users" component={Users} />
+          <Private path="/myUpload/:uploadId" component={SingleUpload} />
+          <Private path="/myprofile" component={Profile} />
           <Redirect to="/signup" />
         </>
       );

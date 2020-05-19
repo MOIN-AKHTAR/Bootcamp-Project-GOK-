@@ -10,6 +10,7 @@ const {
   getUserViaOffice,
   GetUser,
   UpdateUserOffice,
+  GetUserViaYear,
 } = require("../Controllers/UserController");
 const { Protected } = require("../Middlewares/Protected");
 const { grantAccess } = require("../Middlewares/GrantAccess");
@@ -32,7 +33,8 @@ Route.route("/profile")
   .put(CurrentUser, Multer.single("pic"), UpdateProfile)
   .delete(CurrentUser, deleteProfile);
 Route.route("/me").get(CurrentUser, GetMe);
-Route.route("/office").get(grantAccess("admin"), getUserViaOffice);
+Route.route("/office/:office").get(grantAccess("admin"), getUserViaOffice);
+Route.route("/year/:year").get(grantAccess("admin"), GetUserViaYear);
 Route.route("/:userid").get(grantAccess("admin"), GetUser);
 Route.route("/:userid/all/").get(grantAccess("admin"), GetUserHistory);
 Route.route("/:userid/office/").put(grantAccess("admin"), UpdateUserOffice);

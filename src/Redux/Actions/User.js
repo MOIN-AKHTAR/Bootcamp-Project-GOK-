@@ -126,3 +126,63 @@ export const Update_User_Office = (userId, newOffice) => (Dispatch) => {
       })
     );
 };
+
+// http://localhost:5000/api/v1/user/office
+export const Get_User_Via_Office = (data) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_USER,
+  });
+
+  Axios.get(`http://localhost:5000/api/v1/user/office/${data}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: GET_USERS,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) => {
+      console.log(err.response.data);
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      });
+    });
+};
+
+// http://localhost:5000/api/v1/user/year/:year
+export const Get_User_Via_Year = (year) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_USER,
+  });
+
+  Axios.get(`http://localhost:5000/api/v1/user/year/${year}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: GET_USERS,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) => {
+      console.log(err.response.data);
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      });
+    });
+};

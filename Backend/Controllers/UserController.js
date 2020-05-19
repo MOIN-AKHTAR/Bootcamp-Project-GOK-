@@ -157,7 +157,11 @@ exports.GetUserHistory = AsyncWrapper(async (req, res, next) => {
 // @Route   GET api/v1/users/office
 // @Access  Private
 exports.getUserViaOffice = AsyncWrapper(async (req, res, next) => {
-  const Users = await UserModel.find({ office: req.body.office });
+  // let regex = new RegExp(`${req.pa.office}`);
+  // let Params = req.params.office;
+  const Users = await UserModel.find({
+    office: { $regex: new RegExp(req.params.office, "i") },
+  });
   if (!Users) {
     return next(new ErrorClass("Server Error", undefined, 500));
   }
@@ -176,6 +180,16 @@ exports.GetUser = AsyncWrapper(async (req, res, next) => {
   if (!User) {
     return next(new ErrorClass("Couldn't Find This User"));
   }
+  res.status(200).json({
+    success: true,
+    data: User,
+  });
+});
+// @Desc    GET USER'S
+// @Route   GET api/v1/user/year/:year
+// @Access  Private   (Admin)
+exports.GetUserViaYear = AsyncWrapper(async (req, res, next) => {
+  const User = await UserModel.find({ year: req.params.year });
   res.status(200).json({
     success: true,
     data: User,

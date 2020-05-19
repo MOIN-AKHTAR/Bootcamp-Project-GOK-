@@ -25,16 +25,6 @@ exports.createUpload = AsyncWrapper(async (req, res, next) => {
   }
   //Sending Email
   console.log("Email Sended To Admin");
-  // SendEmail({
-  //   to: "moinakhter178@gmail.com",
-  //   from: "moin@example.com",
-  //   subject: `A New Upload From ${req.user.name}`,
-  //   text: "New Upload",
-  //   html: ` <div>
-  //       <button onclick={RejectUpload(${Upload._id})}}>Reject</button>
-  //       <button onclick={ApprovedUpload(${Upload._id})}}>Approved</button>
-  //     </div>`,
-  // });
   res.status(201).json({
     success: true,
     data: Upload,
