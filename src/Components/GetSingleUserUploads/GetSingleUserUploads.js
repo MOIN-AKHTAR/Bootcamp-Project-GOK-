@@ -31,6 +31,7 @@ class GetSingleUserUploads extends Component {
   }
 
   render() {
+    console.log(this.state.uploads);
     let Element;
     if (this.state.loading && this.state.uploads === null) {
       Element = (
@@ -39,13 +40,23 @@ class GetSingleUserUploads extends Component {
           <Spinner asOverlay />
         </div>
       );
-    } else {
+    } else if (this.state.uploads !== null) {
       Element = <GetSingleUploadList uploads={this.state.uploads} />;
     }
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-8 m-auto">
+            <div className="my-2">
+              <button
+                className="btn btn-primary"
+                onClick={() => {
+                  this.props.history.goBack();
+                }}
+              >
+                Back
+              </button>
+            </div>
             {this.state.error ? (
               <h1 className="text-danger my-5 text-center">
                 {this.state.error}

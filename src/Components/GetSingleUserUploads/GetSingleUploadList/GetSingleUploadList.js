@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class GetSingleUploadList extends Component {
   constructor(props) {
@@ -19,17 +19,6 @@ class GetSingleUploadList extends Component {
     } else {
       Element = (
         <React.Fragment>
-          <div className="my-2">
-            <button
-              className="btn btn-primary"
-              onClick={() => {
-                this.props.history.goBack();
-              }}
-            >
-              Back
-            </button>
-          </div>
-
           <div className="text-center">
             <h1 className="text-primary">Uploads</h1>
 
@@ -68,7 +57,8 @@ class GetSingleUploadList extends Component {
         </React.Fragment>
       );
     }
+    console.log(this.state.uploads);
     return <div>{Element}</div>;
   }
 }
-export default withRouter(GetSingleUploadList);
+export default GetSingleUploadList;

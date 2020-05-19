@@ -23,6 +23,8 @@ export const UploadReducer = (State = initialState, Action) => {
       return {
         ...State,
         loading: true,
+        // This is being Modified
+        uploads: null,
       };
     }
     case SET_UPLOADS: {

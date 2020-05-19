@@ -36,7 +36,6 @@ export const setCurrentUser = (token, Dispatch) => {
       });
     })
     .catch((err) => {
-      console.log(err.response.data);
       Dispatch({
         type: GET_ERROR,
         Payload: {

@@ -10,7 +10,6 @@ import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
 import Model from "../../UI/Model/Model";
 let image;
-// let showModel = false;
 let prevId = 1;
 class Upload extends Component {
   constructor(props) {
@@ -40,9 +39,8 @@ class Upload extends Component {
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.upload.upload._id && nextProps.upload.upload._id !== prevId) {
+    if (nextProps.upload.upload && nextProps.upload.upload._id !== prevId) {
       prevId = nextProps.upload.upload._id;
-      // showModel = true;
       this.setState({
         month: 0,
         pic: "",
