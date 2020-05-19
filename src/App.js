@@ -9,6 +9,7 @@ import Menu from "./Components/Menu/Menu";
 import Profile from "./Components/Profile/Profile";
 import Users from "./Components/Users/Users";
 import GetSingleUser from "./Components/GetSingleUser/GetSingleUser";
+import GetSingleUserUploads from "./Components/GetSingleUserUploads/GetSingleUserUploads";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 const JWT = require("jwt-decode");
@@ -26,41 +27,45 @@ const isAuthenticated = () => {
 class App extends Component {
   render() {
     let Element;
-
     if (
       isAuthenticated() &&
       JWT(localStorage.getItem("jwt_token")).role === "user"
     ) {
       Element = (
-        <Switch>
+        <>
           <Route path="/upload" component={Upload} />
           <Route exact path="/myUploads" component={UploadList} />
           <Route path="/myUpload/:uploadId" component={SingleUpload} />
           <Route path="/myprofile" component={Profile} />
           <Redirect to="/upload" />
-        </Switch>
+        </>
       );
     } else if (
       isAuthenticated() &&
       JWT(localStorage.getItem("jwt_token")).role === "admin"
     ) {
       Element = (
-        <Switch>
+        <>
           <Route path="/signup" component={SignUp} />
-          <Route path="/user/:userId" component={GetSingleUser} />
+          <Route exact path="/user/:userId" component={GetSingleUser} />
+          <Route
+            path="/user/:userId/uploads"
+            component={GetSingleUserUploads}
+          />
           <Route path="/users" component={Users} />
+          <Route path="/myUpload/:uploadId" component={SingleUpload} />
           <Route path="/myprofile" component={Profile} />
           <Redirect to="/signup" />
-        </Switch>
+        </>
       );
     }
     return (
       <BrowserRouter>
         <Menu />
         <Switch>
-          <Route path="/" exact component={Login} />
+          <Route path="/login" exact component={Login} />
           {Element}
-          <Redirect to="/" />
+          <Redirect to="/login" />
         </Switch>
       </BrowserRouter>
     );

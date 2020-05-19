@@ -5,7 +5,8 @@ import {
   GET_UPLOAD,
 } from "../Types/Types";
 const initialState = {
-  upload: {},
+  // upload: {},
+  upload: null,
   uploads: null,
   loading: false,
 };

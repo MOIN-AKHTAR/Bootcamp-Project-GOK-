@@ -35,6 +35,8 @@ Router.route("/history/year/:year").get(getHistoryViaYear);
 
 Router.route("/all").get(getAll).delete(deleteAllUploads);
 
+// Route.route("")
+
 Router.route("/:id")
   .put(Multer.single("pic"), updateUpload)
   .delete(deleteUpload)

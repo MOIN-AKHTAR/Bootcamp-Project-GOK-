@@ -16,9 +16,8 @@ const isAuthenticated = () => {
 // To SignOut
 const signOut = (history) => {
   if (typeof window !== "undefined") {
-    // Remove JWT From LocalStorage
     localStorage.removeItem("jwt_token");
-    window.location.href = "/";
+    history.push("/login");
   }
 };
 
@@ -31,13 +30,6 @@ function MenuBar({ history }) {
   return (
     <div className={`nav nav-tabs bg-primary  ${Classes.wrapper}`}>
       <ul className={`${Classes.ul}`}>
-        {!isAuthenticated() && (
-          <li className="nav-item">
-            <NavLink to="/" className="nav-link" style={isActive(history, "/")}>
-              Login
-            </NavLink>
-          </li>
-        )}
         {isAuthenticated() &&
           JWT_DECODE(localStorage.getItem("jwt_token")).role === "admin" && (
             <React.Fragment>
@@ -70,10 +62,9 @@ function MenuBar({ history }) {
               </li>
               <li>
                 <NavLink
-                  to="/logout"
-                  style={isActive(history, "/logout")}
+                  to="/login"
                   onClick={() => {
-                    signOut(history);
+                    signOut(history, "/login");
                   }}
                   className="nav-link"
                 >
@@ -114,8 +105,8 @@ function MenuBar({ history }) {
               </li>
               <li>
                 <NavLink
-                  to="/logout"
-                  style={isActive(history, "/logout")}
+                  to="/login"
+                  style={isActive(history, "/login")}
                   onClick={() => {
                     signOut(history);
                   }}

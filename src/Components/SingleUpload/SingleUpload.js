@@ -5,6 +5,7 @@ import { Get_Upload, UpdateUpload } from "../../Redux/Actions/Uploads";
 import { connect } from "react-redux";
 import UploadImage from "../../UI/UploadImage/UploadImage";
 import Button from "../../UI/Button/Button";
+import JWT from "jwt-decode";
 
 let Image = null;
 let MONTH = [
@@ -74,7 +75,6 @@ class SingleUpload extends Component {
 
   render() {
     let Element;
-    // const { upload } = this.props.upload;
     if (this.state.upload === null) {
       Element = (
         <div>
@@ -97,21 +97,62 @@ class SingleUpload extends Component {
           )}
           <div className="col-md-6 m-auto">
             <form onSubmit={this.onSubmit}>
-              <UploadImage
-                Image={this.state.upload.pic[0]}
-                onInput={this.onInput}
-              />
+              {localStorage.getItem("jwt_token") &&
+              JWT(localStorage.getItem("jwt_token")).role !== "admin" ? (
+                <UploadImage
+                  Image={this.state.upload.pic[0]}
+                  onInput={this.onInput}
+                />
+              ) : (
+                <div
+                  style={{ width: "10rem", height: "10rem", margin: "auto" }}
+                >
+                  <img
+                    src={this.state.upload.pic[0]}
+                    alt="No Image"
+                    style={{ width: "100%", height: "100%" }}
+                    aria-hidden={true}
+                  />
+                </div>
+              )}
+
               <div className="mt-3">
                 <h3>ID:{this.state.upload._id}</h3>
-                <h3>
+                {/* <h3>
                   Created At :
                   {new Date(this.state.upload.createdAt).toDateString()}
-                </h3>
+                </h3> */}
                 <h3>Month:{MONTH[this.state.upload.month]}</h3>
                 <h3>Year: {this.state.upload.year}</h3>
                 <h3>Status: {this.state.upload.status}</h3>
                 <h3>Amount: {this.state.upload.amount}</h3>
-                <Button isValid={true} title="Update" />
+                <div>
+                  {localStorage.getItem("jwt_token") &&
+                  JWT(localStorage.getItem("jwt_token")).role !== "admin" ? (
+                    <Button isValid={true} title="Update" />
+                  ) : (
+                    <div className="text-center">
+                      {this.state.upload.status !== "declined" && (
+                        <button
+                          type="button"
+                          className="btn btn-danger"
+                          style={{ border: "1px solid black", margin: "5px" }}
+                        >
+                          Declined
+                        </button>
+                      )}
+                      {this.state.upload.status !== "approved" && (
+                        <button
+                          type="button"
+                          className="btn btn-success"
+                          style={{ border: "1px solid black", margin: "5px" }}
+                        >
+                          Approve
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             </form>
           </div>

@@ -2,7 +2,8 @@ import { SET_CURRENT_USER } from "../Types/Types";
 import { isEmpty } from "../../Utils/isEmpty";
 const initialState = {
   isAuthenticated: false,
-  user: {},
+  user: null,
+  // user: {},
 };
 
 export const AuthReducer = (State = initialState, Action) => {

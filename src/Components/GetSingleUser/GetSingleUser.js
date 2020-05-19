@@ -5,6 +5,7 @@ import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
 import Button from "../../UI/Button/Button";
 import Input from "../../UI/Input/Input";
+import { Link } from "react-router-dom";
 
 class GetSingleUser extends Component {
   state = {
@@ -50,14 +51,13 @@ class GetSingleUser extends Component {
     this.setState({
       loading: true,
     });
-    setTimeout(() => {
-      const data = {
-        office: this.state.newOffice,
-      };
-      this.props.Update_User_Office(this.state.user._id, data);
-    }, 5000);
+    const data = {
+      office: this.state.newOffice,
+    };
+    this.props.Update_User_Office(this.state.user._id, data);
   };
 
+  onChange = (Value) => console.log(Value);
   render() {
     let Element;
     if (this.state.loading && this.state.user === null) {
@@ -69,31 +69,48 @@ class GetSingleUser extends Component {
       );
     } else {
       Element = (
-        <div className="text-center mt-2">
-          <form onSubmit={this.onSubmit}>
-            <div style={{ width: "10rem", height: "10rem", margin: "auto" }}>
-              <img
-                src={this.state.user.pic}
-                alt="No Image"
-                style={{ width: "100%", height: "100%" }}
-                aria-hidden={true}
+        <React.Fragment>
+          <div className="my-2">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                this.props.history.goBack();
+              }}
+            >
+              Back
+            </button>
+          </div>
+          <div className="text-center mt-2">
+            <form onSubmit={this.onSubmit}>
+              <div style={{ width: "10rem", height: "10rem", margin: "auto" }}>
+                <img
+                  src={this.state.user.pic}
+                  alt="No Image"
+                  style={{ width: "100%", height: "100%" }}
+                  aria-hidden={true}
+                />
+              </div>
+              <Input
+                name="office"
+                id="office"
+                title="Office"
+                placeholder={"Enter New Office"}
+                value={this.state.newOffice}
+                onChange={this.changeHandler}
               />
-            </div>
-            <Input
-              name="office"
-              id="office"
-              title="Office"
-              placeholder={"Enter New Office"}
-              value={this.state.newOffice}
-              onChange={this.changeHandler}
-            />
-            <h4>Name: {this.state.user.name}</h4>
-            <h4>Email: {this.state.user.email}</h4>
-            <h4>Joining Year: {this.state.user.year}</h4>
+              <h4>Name: {this.state.user.name}</h4>
+              <h4>Email: {this.state.user.email}</h4>
+              <h4>Joining Year: {this.state.user.year}</h4>
 
-            <Button title="Update" isValid={this.state.isValid} />
-          </form>
-        </div>
+              <Button title="Update" isValid={this.state.isValid} />
+              <Link
+                to={`/user/${this.state.user._id}/uploads`}
+                className="btn btn-primary"
+                style={{ border: "1px solid black", margin: "5px 0" }}
+              >{`${this.state.user.name.split(" ")[0]}'s Uploads`}</Link>
+            </form>
+          </div>
+        </React.Fragment>
       );
     }
     return (

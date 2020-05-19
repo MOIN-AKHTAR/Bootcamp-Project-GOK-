@@ -16,6 +16,7 @@ export const ProfileReducer = (State = initialState, Action) => {
       return {
         ...State,
         profile: Action.Payload,
+        loading: false,
       };
     }
     default: {

@@ -56,12 +56,10 @@ class Profile extends Component {
     this.setState({
       loading: true,
     });
-    setTimeout(() => {
-      const formData = new FormData();
-      formData.append("pic", Image);
-      formData.append("password", this.state.password);
-      this.props.UpdateProfile(formData);
-    }, 3000);
+    const formData = new FormData();
+    formData.append("pic", Image);
+    formData.append("password", this.state.password);
+    this.props.UpdateProfile(formData);
   };
 
   render() {
@@ -75,7 +73,17 @@ class Profile extends Component {
       );
     } else if (!this.state.error && this.state.profile !== null) {
       Element = (
-        <div className="mt-2">
+        <div>
+          <div className="my-2">
+            <button
+              className="btn btn-primary"
+              onClick={() => {
+                this.props.history.goBack();
+              }}
+            >
+              Back
+            </button>
+          </div>
           {this.state.loading && (
             <React.Fragment>
               <Spinner asOverlay />

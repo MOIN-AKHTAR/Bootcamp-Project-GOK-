@@ -114,8 +114,6 @@ export const UpdateUpload = (Id, Data) => (Dispatch) => {
         type: GET_UPLOAD,
         Payload: res.data.data,
       });
-      // console.log(res.data);
-      // histoy.push("/myUploads");
     })
     .catch((err) => {
       Dispatch({
@@ -132,7 +130,7 @@ export const GetUploadViaMonth = (Month) => (Dispatch) => {
   Dispatch({
     type: LOAD_UPLOADS,
   });
-  Axios.get(`http://localhost:5000/api/v1/upload//history/month/${Month}`, {
+  Axios.get(`http://localhost:5000/api/v1/upload/history/month/${Month}`, {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + token,
@@ -159,7 +157,7 @@ export const GetUploadViaYear = (year) => (Dispatch) => {
   Dispatch({
     type: LOAD_UPLOADS,
   });
-  Axios.get(`http://localhost:5000/api/v1/upload//history/year/${year}`, {
+  Axios.get(`http://localhost:5000/api/v1/upload/history/year/${year}`, {
     headers: {
       Accept: "application/json",
       Authorization: "Bearer " + token,
@@ -171,6 +169,33 @@ export const GetUploadViaYear = (year) => (Dispatch) => {
         Payload: res.data.data,
       });
     })
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+export const Get_Specific_User_Uploads = (Id) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.get(`http://localhost:5000/api/v1/user/${Id}/all`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: SET_UPLOADS,
+        Payload: res.data.data,
+      })
+    )
     .catch((err) =>
       Dispatch({
         type: GET_ERROR,
