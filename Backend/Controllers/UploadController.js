@@ -199,6 +199,32 @@ exports.approveUpload = AsyncWrapper(async (req, res, next) => {
     data: Upload,
   });
 });
+// @Desc   Change Uploads Status
+// @Route   Patch api/v1/upload/pend/:id
+// @Access  Just For Admins
+exports.pendUpload = AsyncWrapper(async (req, res, next) => {
+  const Upload = await UploadModel.findById(req.params.id).populate("user");
+
+  if (!Upload) {
+    return next(
+      new ErrorClass("Couldn't Find Upload With This ID", undefined, 404)
+    );
+  }
+  Upload.status = "pending";
+  // Sending Email Is Remaining
+  let Time = new Date();
+  console.log(
+    `Dear ${Upload.user.name} Your Upload Request With Id ${
+      Upload._id
+    } Has Been Pended At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
+  );
+
+  await Upload.save();
+  res.status(200).json({
+    success: true,
+    data: Upload,
+  });
+});
 
 // @Desc   Get History Based On Given Month
 // @Route   Patch api/v1/upload/history/month/:month

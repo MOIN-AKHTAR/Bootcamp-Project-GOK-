@@ -6,6 +6,9 @@ import { Create_User } from "../../Redux/Actions/User";
 import { connect } from "react-redux";
 import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
+import { DatePicker } from "antd";
+import moment from "moment";
+import "antd/dist/antd.css";
 let prevId = 1;
 class SignUp extends Component {
   state = {
@@ -20,7 +23,6 @@ class SignUp extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     if (nextProps.user.user && nextProps.user.user._id !== prevId) {
       prevId = nextProps.user.user._id;
       this.setState({
@@ -48,22 +50,7 @@ class SignUp extends Component {
       }
     }
   }
-
-  // It Will Check Validation For Inputs
-  // validationChecking = (value, rules) => {
-  //   let isValid = true;
-  //   if (rules.required) {
-  //     isValid = value.trim() !== "" && isValid;
-  //   }
-  //   if (rules.isEmail) {
-  //     isValid = Validator.isEmail(value) && isValid;
-  //   }
-  //   if (rules.minlength) {
-  //     isValid = value.trim().length >= rules.minlength && isValid;
-  //   }
-  //   return isValid;
-  // };
-
+  // Submit Data For SignUp
   onSubmit = (e) => {
     e.preventDefault();
     this.setState({
@@ -74,6 +61,7 @@ class SignUp extends Component {
       email: this.state.email,
       phone_number: this.state.phone_number,
       office: this.state.office,
+      year: this.state.year,
     };
     this.props.Create_User(data);
   };
@@ -83,6 +71,15 @@ class SignUp extends Component {
     this.setState({
       [e.target.name]: e.target.value,
     });
+  };
+
+  // Change Year
+  onChangeYear = (date) => {
+    if (date) {
+      this.setState({
+        year: new Date(date._d).getFullYear(),
+      });
+    }
   };
 
   render() {
@@ -101,6 +98,9 @@ class SignUp extends Component {
                 <Spinner asOverlay />
                 <BackDrop />
               </div>
+            )}
+            {this.state.message && (
+              <h1 className="text-center text-danger">{this.state.message}</h1>
             )}
             <h1 className="text-center mb-2 text-primary">SignUp</h1>
             <div className={Classes.form}>
@@ -143,6 +143,37 @@ class SignUp extends Component {
                   onChange={this.onChangeHandler}
                   error={phone_Err}
                 />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    margin: "auto",
+                    marginBottom: "1rem",
+                    width: "90%",
+                  }}
+                >
+                  <label
+                    style={{
+                      fontWeight: "bolder",
+                      fontSize: "1rem",
+                      fontStyle: "oblique",
+                      width: "20%",
+                      marginRight: "10px",
+                    }}
+                    htmlFor="year"
+                  >
+                    Year
+                  </label>
+                  <DatePicker
+                    style={{
+                      width: "100%",
+                    }}
+                    picker="year"
+                    id="year"
+                    onChange={this.onChangeYear}
+                    placeholder="Select Year"
+                  />
+                </div>
 
                 <Button title="SignUp" isValid={true} />
               </form>

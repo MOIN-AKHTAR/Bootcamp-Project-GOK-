@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
-import { Get_Upload, UpdateUpload } from "../../Redux/Actions/Uploads";
+import {
+  Get_Upload,
+  UpdateUpload,
+  Reject_Upload,
+  Approve_Upload,
+  Pedn_Upload,
+} from "../../Redux/Actions/Uploads";
 import { connect } from "react-redux";
 import UploadImage from "../../UI/UploadImage/UploadImage";
 import Button from "../../UI/Button/Button";
@@ -54,17 +60,22 @@ class SingleUpload extends Component {
   componentDidMount() {
     this.props.Get_Upload(this.props.match.params.uploadId);
   }
+  // Approve Upload
+  Approved = (Id) => this.props.Approve_Upload(Id);
+  // Decline Upload
+  Declined = (Id) => this.props.Reject_Upload(Id);
+  // Pend Upload
+  Pend = (Id) => this.props.Pedn_Upload(Id);
 
   // Getting Data From Stroe After Dispatch
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.error);
     if (nextProps.error) {
       this.setState({
         error: nextProps.error.message,
         loading: false,
       });
     }
-    if (!nextProps.upload.loading) {
+    if (!nextProps.upload.loading && nextProps.upload.upload) {
       Image = nextProps.upload.upload.pic[0];
       this.setState({
         loading: false,
@@ -82,11 +93,7 @@ class SingleUpload extends Component {
           <BackDrop />
         </div>
       );
-    } else if (
-      // !this.state.loading &&
-      this.state.upload !== null ||
-      !this.state.error
-    ) {
+    } else if (!this.state.loading && this.state.upload !== null) {
       Element = (
         <div>
           {this.state.loading && (
@@ -118,10 +125,6 @@ class SingleUpload extends Component {
 
               <div className="mt-3">
                 <h3>ID:{this.state.upload._id}</h3>
-                {/* <h3>
-                  Created At :
-                  {new Date(this.state.upload.createdAt).toDateString()}
-                </h3> */}
                 <h3>Month:{MONTH[this.state.upload.month]}</h3>
                 <h3>Year: {this.state.upload.year}</h3>
                 <h3>Status: {this.state.upload.status}</h3>
@@ -134,6 +137,7 @@ class SingleUpload extends Component {
                     <div className="text-center">
                       {this.state.upload.status !== "declined" && (
                         <button
+                          onClick={() => this.Declined(this.state.upload._id)}
                           type="button"
                           className="btn btn-danger"
                           style={{ border: "1px solid black", margin: "5px" }}
@@ -143,11 +147,22 @@ class SingleUpload extends Component {
                       )}
                       {this.state.upload.status !== "approved" && (
                         <button
+                          onClick={() => this.Approved(this.state.upload._id)}
                           type="button"
                           className="btn btn-success"
                           style={{ border: "1px solid black", margin: "5px" }}
                         >
                           Approve
+                        </button>
+                      )}
+                      {this.state.upload.status !== "pending" && (
+                        <button
+                          onClick={() => this.Pend(this.state.upload._id)}
+                          type="button"
+                          className="btn btn-secondary"
+                          style={{ border: "1px solid black", margin: "5px" }}
+                        >
+                          Pending
                         </button>
                       )}
                     </div>
@@ -194,6 +209,10 @@ const mapStateToProps = (State) => ({
   error: State.error,
 });
 
-export default connect(mapStateToProps, { Get_Upload, UpdateUpload })(
-  SingleUpload
-);
+export default connect(mapStateToProps, {
+  Get_Upload,
+  UpdateUpload,
+  Reject_Upload,
+  Approve_Upload,
+  Pedn_Upload,
+})(SingleUpload);

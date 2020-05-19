@@ -11,6 +11,7 @@ const {
   getAll,
   approveUpload,
   rejectUpload,
+  pendUpload,
   getHistoryViaMonth,
   getHistoryViaYear,
   deleteAllUploads,
@@ -20,6 +21,7 @@ const Router = Express.Router();
 
 Router.route("/approved/:id").patch(approveUpload);
 Router.route("/reject/:id").patch(rejectUpload);
+Router.route("/pend/:id").patch(pendUpload);
 
 Router.use(Protected);
 

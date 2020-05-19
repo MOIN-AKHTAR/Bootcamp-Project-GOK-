@@ -57,7 +57,6 @@ class GetSingleUploadList extends Component {
         </React.Fragment>
       );
     }
-    console.log(this.state.uploads);
     return <div>{Element}</div>;
   }
 }

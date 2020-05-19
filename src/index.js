@@ -1,11 +1,11 @@
-import React from "react";
-import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import { Provider } from "react-redux";
-import { Store } from "./Redux/Store";
+import React from "react";
+import ReactDOM from "react-dom";
 import JWT_DECODE from "jwt-decode";
+import { Store } from "./Redux/Store";
+import { Provider } from "react-redux";
+import * as serviceWorker from "./serviceWorker";
 import { setCurrentUser } from "./Redux/Actions/LogIn";
 
 let JWT = localStorage.getItem("jwt_token");
@@ -20,7 +20,7 @@ if (JWT) {
 
   if (exp < CurrentTime) {
     localStorage.clear();
-    window.location.href = "/login";
+    window.location.assign("/login");
   }
 }
 

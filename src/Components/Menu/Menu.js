@@ -28,7 +28,7 @@ const isActive = (history, path) =>
 
 function MenuBar({ history }) {
   return (
-    <div className={`nav nav-tabs bg-primary  ${Classes.wrapper}`}>
+    <div className={`nav nav-tabs bg-dark ${Classes.wrapper}`}>
       <ul className={`${Classes.ul}`}>
         {isAuthenticated() &&
           JWT_DECODE(localStorage.getItem("jwt_token")).role === "admin" && (

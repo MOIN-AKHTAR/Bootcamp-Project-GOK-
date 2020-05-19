@@ -31,7 +31,6 @@ class GetSingleUserUploads extends Component {
   }
 
   render() {
-    console.log(this.state.uploads);
     let Element;
     if (this.state.loading && this.state.uploads === null) {
       Element = (

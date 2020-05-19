@@ -1,18 +1,17 @@
-import React, { Component } from "react";
+import JWT from "jwt-decode";
 import { connect } from "react-redux";
+import React, { Component } from "react";
+import Menu from "./Components/Menu/Menu";
+import Users from "./Components/Users/Users";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
 import Upload from "./Components/Upload/Upload";
+import Profile from "./Components/Profile/Profile";
 import UploadList from "./Components/UploadList/UploadList";
 import SingleUpload from "./Components/SingleUpload/SingleUpload";
-import Menu from "./Components/Menu/Menu";
-import Profile from "./Components/Profile/Profile";
-import Users from "./Components/Users/Users";
 import GetSingleUser from "./Components/GetSingleUser/GetSingleUser";
-import GetSingleUserUploads from "./Components/GetSingleUserUploads/GetSingleUserUploads";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
-const JWT = require("jwt-decode");
+import GetSingleUserUploads from "./Components/GetSingleUserUploads/GetSingleUserUploads";
 
 const isAuthenticated = () => {
   if (typeof window === "undefined") {

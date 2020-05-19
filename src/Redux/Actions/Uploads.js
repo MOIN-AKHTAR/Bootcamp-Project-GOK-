@@ -205,3 +205,84 @@ export const Get_Specific_User_Uploads = (Id) => (Dispatch) => {
       })
     );
 };
+
+export const Approve_Upload = (Id) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.patch(`http://localhost:5000/api/v1/upload/approved/${Id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: GET_UPLOAD,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+export const Reject_Upload = (Id) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.patch(`http://localhost:5000/api/v1/upload/reject/${Id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: GET_UPLOAD,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+export const Pedn_Upload = (Id) => (Dispatch) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.patch(`http://localhost:5000/api/v1/upload/pend/${Id}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) =>
+      Dispatch({
+        type: GET_UPLOAD,
+        Payload: res.data.data,
+      })
+    )
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
