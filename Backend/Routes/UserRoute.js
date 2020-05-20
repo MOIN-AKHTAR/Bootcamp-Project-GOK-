@@ -11,6 +11,8 @@ const {
   GetUser,
   UpdateUserOffice,
   GetUserViaYear,
+  GetSpecificUserUploadViaMonth,
+  GetSpecificUserUploadViaStatus,
 } = require("../Controllers/UserController");
 const { Protected } = require("../Middlewares/Protected");
 const { grantAccess } = require("../Middlewares/GrantAccess");
@@ -38,5 +40,13 @@ Route.route("/year/:year").get(grantAccess("admin"), GetUserViaYear);
 Route.route("/:userid").get(grantAccess("admin"), GetUser);
 Route.route("/:userid/all/").get(grantAccess("admin"), GetUserHistory);
 Route.route("/:userid/office/").put(grantAccess("admin"), UpdateUserOffice);
+Route.route("/:userid/month/:month").get(
+  grantAccess("admin"),
+  GetSpecificUserUploadViaMonth
+);
+Route.route("/:userid/status/:status").get(
+  grantAccess("admin"),
+  GetSpecificUserUploadViaStatus
+);
 
 module.exports = Route;

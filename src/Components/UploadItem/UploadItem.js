@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import DropDown from "../../UI/DropDown/DropDown";
 import { Link } from "react-router-dom";
 import { withRouter } from "react-router-dom";
+import { Get_Uploads } from "../../Redux/Actions/Uploads";
+import { connect } from "react-redux";
 import { DatePicker } from "antd";
+import Classes from "./UploadItems.module.css";
 import "antd/dist/antd.css";
 
 class UploadItem extends Component {
@@ -43,6 +46,8 @@ class UploadItem extends Component {
       this.setState({
         year: new Date(date._d).getFullYear(),
       });
+    } else {
+      this.props.Get_Uploads();
     }
   };
 
@@ -54,21 +59,18 @@ class UploadItem extends Component {
     }
   }
 
-  showRecord = (id) => console.log(id);
-
   render() {
     let Element;
     if (this.state.uploads.length === 0) {
       Element = (
         <div>
-          <h1 className="text-danger text-center my-2">Uploads Not Found...</h1>
+          <h1 className="text-danger text-center my-2">Uploads Not Found :(</h1>
         </div>
       );
     } else {
       Element = (
-        <div className="text-center mt-1">
-          <h1 className="text-primary my-2">Uploads</h1>
-
+        <div className="text-center ">
+          <h1 className="text-primary">Uploads</h1>
           <table className="table">
             <thead className="thead-dark ">
               <tr>
@@ -104,42 +106,43 @@ class UploadItem extends Component {
       );
     }
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-10 m-auto">
-            <button
-              className="btn btn-primary my-2"
-              onClick={() => {
-                this.props.history.push("/upload");
-              }}
-            >
-              Back
-            </button>
-            <div className="mb-2 m-auto d-flex align-items-center ">
-              <DropDown
-                title="Search By Month"
-                id="month"
-                name="month"
-                Arr={this.state.option}
-                onChange={this.onChangeHandler}
-                value={this.state.month}
-              />
-              <div className="d-flex">
-                <label htmlFor="year">Search By Year</label>
-                <DatePicker
-                  picker="year"
-                  id="year"
-                  onChange={this.onChangeYear}
-                />
-              </div>
-            </div>
-
-            {Element}
+      <React.Fragment>
+        <button
+          className="btn btn-primary my-2"
+          onClick={() => {
+            this.props.history.push("/upload");
+          }}
+        >
+          Back
+        </button>
+        <div className="mb-2">
+          <>
+            <DropDown
+              title="Search By Month"
+              id="month"
+              name="month"
+              Arr={this.state.option}
+              onChange={this.onChangeHandler}
+              value={this.state.month}
+            />
+          </>
+          <div className={Classes.pickerWrapper}>
+            <label htmlFor="year" className={`${Classes.label} `}>
+              Search By Year
+            </label>
+            <DatePicker
+              className={Classes.picker}
+              picker="year"
+              id="year"
+              onChange={this.onChangeYear}
+            />
           </div>
         </div>
-      </div>
+
+        {Element}
+      </React.Fragment>
     );
   }
 }
 
-export default withRouter(UploadItem);
+export default connect(null, { Get_Uploads })(withRouter(UploadItem));

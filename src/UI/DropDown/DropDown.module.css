@@ -1,7 +1,9 @@
 .dropDown {
   width: 70%;
+  border: 1px solid gray;
   margin: 0 10px;
   box-shadow: 2px 2px 2px #ddd;
+  height: 2rem;
 }
 .dropDown:hover {
   cursor: pointer;
@@ -9,14 +11,25 @@
   background: #ddd;
 }
 .label {
+  width: auto;
   font-weight: bolder;
   margin: 0.5rem auto;
   font-size: 1rem;
   font-style: oblique;
 }
 .dropDownWrapper {
-  width: 90%;
-
+  display: flex;
+  align-items: center;
+  width: 80%;
   margin: auto;
   margin-top: 1rem;
+}
+
+@media (max-width: 400px) {
+  .dropDownWrapper {
+    width: 90%;
+  }
+  .dropDown {
+    width: 50%;
+  }
 }

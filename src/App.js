@@ -65,7 +65,7 @@ class App extends Component {
         <Switch>
           <Route path="/login" exact component={Login} />
           {Element}
-          <Redirect to="/login" />
+          <Redirect from="/" to="/login" />
         </Switch>
       </BrowserRouter>
     );

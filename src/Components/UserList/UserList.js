@@ -35,7 +35,7 @@ class UserList extends Component {
   // To Change OfficeName
   onChange = (e) => {
     if (e.target.value.trim().length > 0) {
-      this.props.Get_User_Via_Office(e.target.value);
+      this.props.Get_User_Via_Office(e.target.value.trim());
     }
     this.setState({
       officeName: e.target.value,

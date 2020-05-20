@@ -220,3 +220,34 @@ exports.UpdateUserOffice = AsyncWrapper(async (req, res, next) => {
     data: User,
   });
 });
+
+// @Desc    GET USER'S UPLOADS VIA MONTH
+// @Route   GET api/v1/users/:userid/month/:month
+// @Access  Private   (Admin)
+exports.GetSpecificUserUploadViaMonth = AsyncWrapper(async (req, res, next) => {
+  const Uploads = await UploadsModel.find({
+    user: req.params.userid,
+    month: req.params.month,
+  });
+  res.status(200).json({
+    success: true,
+    data: Uploads,
+  });
+});
+
+// @Desc    GET USER'S UPLOADS VIA MONTH
+// @Route   GET api/v1/users/:userid/status/:status
+// @Access  Private   (Admin)
+exports.GetSpecificUserUploadViaStatus = AsyncWrapper(
+  async (req, res, next) => {
+    console.log("GetSpecificUserUploadViaStatus");
+    const Uploads = await UploadsModel.find({
+      user: req.params.userid,
+      status: req.params.status,
+    });
+    res.status(200).json({
+      success: true,
+      data: Uploads,
+    });
+  }
+);

@@ -1,0 +1,28 @@
+.pickerWrapper {
+  width: 70%;
+  margin: 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.label {
+  width: auto;
+  font-weight: bolder;
+  font-size: 1rem;
+  font-style: oblique;
+}
+.picker {
+  width: 65%;
+  height: 2rem;
+  font-size: 1.5rem;
+}
+
+@media (max-width: 500px) {
+  .pickerWrapper {
+    width: 80%;
+  }
+  .picker {
+    width: 50%;
+  }
+}

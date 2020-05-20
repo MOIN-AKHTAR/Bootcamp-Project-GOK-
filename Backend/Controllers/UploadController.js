@@ -108,7 +108,7 @@ exports.deleteAllUploads = AsyncWrapper(async (req, res, next) => {
 // @Route   Get api/v1/upload/:id
 // @Access  Private
 exports.getUpload = AsyncWrapper(async (req, res, next) => {
-  const Upload = await UploadModel.findById(req.params.id);
+  const Upload = await UploadModel.findById(req.params.id).sort({ month: 1 });
   if (!Upload) {
     return next(
       new ErrorClass("Couldn't Find Upload With This ID", undefined, 404)

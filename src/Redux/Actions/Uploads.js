@@ -1,3 +1,5 @@
+import { GET_UPLOADS } from "../Types/Types";
+
 const {
   POST_UPLOAD,
   GET_ERROR,
@@ -196,6 +198,66 @@ export const Get_Specific_User_Uploads = (Id) => (Dispatch) => {
         Payload: res.data.data,
       })
     )
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+// http://localhost:5000/api/v1/user/:userid/month/:month
+export const Get_Specific_User_Uploads_Via_Month = (Id, Month) => (
+  Dispatch
+) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.get(`http://localhost:5000/api/v1/user/${Id}/month/${Month}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      console.log(res.data.data);
+      Dispatch({
+        type: SET_UPLOADS,
+        Payload: res.data.data,
+      });
+    })
+    .catch((err) =>
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      })
+    );
+};
+
+export const Get_Specific_User_Uploads_Via_Status = (Id, Status) => (
+  Dispatch
+) => {
+  const token = localStorage.getItem("jwt_token");
+  Dispatch({
+    type: LOAD_UPLOADS,
+  });
+  Axios.get(`http://localhost:5000/api/v1/user/${Id}/status/${Status}`, {
+    headers: {
+      Accept: "application/json",
+      Authorization: "Bearer " + token,
+    },
+  })
+    .then((res) => {
+      Dispatch({
+        type: SET_UPLOADS,
+        Payload: res.data.data,
+      });
+    })
     .catch((err) =>
       Dispatch({
         type: GET_ERROR,
