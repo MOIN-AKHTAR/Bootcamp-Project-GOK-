@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import DropDown from "../../UI/DropDown/DropDown";
-import { Link } from "react-router-dom";
-import { withRouter } from "react-router-dom";
-import { Get_Uploads } from "../../Redux/Actions/Uploads";
-import { connect } from "react-redux";
-import { DatePicker } from "antd";
-import Classes from "./UploadItems.module.css";
 import "antd/dist/antd.css";
+import { DatePicker } from "antd";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
+import Classes from "./UploadItems.module.css";
+import DropDown from "../../UI/DropDown/DropDown";
+import { Get_Uploads } from "../../Redux/Actions/Uploads";
 
 class UploadItem extends Component {
   constructor(props) {

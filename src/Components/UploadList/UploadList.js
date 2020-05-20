@@ -1,13 +1,13 @@
+import { connect } from "react-redux";
 import React, { Component } from "react";
-import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
+import BackDrop from "../../UI/BackDrop/BackDrop";
 import UploadItem from "../UploadItem/UploadItem";
 import {
   Get_Uploads,
   GetUploadViaMonth,
   GetUploadViaYear,
 } from "../../Redux/Actions/Uploads";
-import { connect } from "react-redux";
 
 class UploadList extends Component {
   state = {

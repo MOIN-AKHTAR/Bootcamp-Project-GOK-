@@ -1,14 +1,14 @@
-const UserModel = require("../Models/UserModel");
-const UploadsModel = require("../Models/UploadsModel");
-const AsyncWrapper = require("../Utils/AsynWrapper");
-const ErrorClass = require("../Utils/ErrorClass");
-const SignUpValidation = require("../Validations/UserValidation/SignUpValidation");
-const LogInValidation = require("../Validations/UserValidation/LoginValidation");
 const _ = require("lodash");
-const Cloudinary = require("cloudinary");
-const Password_Generator = require("generate-password");
-const ProfileValidation = require("../Validations/UserValidation/ProfileValidation");
 require("../Middlewares/Cloudinary");
+const Cloudinary = require("cloudinary");
+const UserModel = require("../Models/UserModel");
+const ErrorClass = require("../Utils/ErrorClass");
+const AsyncWrapper = require("../Utils/AsynWrapper");
+const UploadsModel = require("../Models/UploadsModel");
+const Password_Generator = require("generate-password");
+const LogInValidation = require("../Validations/UserValidation/LoginValidation");
+const SignUpValidation = require("../Validations/UserValidation/SignUpValidation");
+const ProfileValidation = require("../Validations/UserValidation/ProfileValidation");
 
 // @Desc   Create User
 // @Route   POST api/v1/users/signup
@@ -157,9 +157,8 @@ exports.GetUserHistory = AsyncWrapper(async (req, res, next) => {
 // @Route   GET api/v1/users/office
 // @Access  Private
 exports.getUserViaOffice = AsyncWrapper(async (req, res, next) => {
-  // let regex = new RegExp(`${req.pa.office}`);
-  // let Params = req.params.office;
   const Users = await UserModel.find({
+    role: "user",
     office: { $regex: new RegExp(req.params.office, "i") },
   });
   if (!Users) {

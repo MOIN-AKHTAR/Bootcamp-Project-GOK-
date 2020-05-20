@@ -1,6 +1,10 @@
+import JWT from "jwt-decode";
+import { connect } from "react-redux";
 import React, { Component } from "react";
-import BackDrop from "../../UI/BackDrop/BackDrop";
+import Button from "../../UI/Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import UploadImage from "../../UI/UploadImage/UploadImage";
 import {
   Get_Upload,
   UpdateUpload,
@@ -8,10 +12,6 @@ import {
   Approve_Upload,
   Pedn_Upload,
 } from "../../Redux/Actions/Uploads";
-import { connect } from "react-redux";
-import UploadImage from "../../UI/UploadImage/UploadImage";
-import Button from "../../UI/Button/Button";
-import JWT from "jwt-decode";
 
 let Image = null;
 let MONTH = [

@@ -1,5 +1,5 @@
-const Mongoose = require("mongoose");
 const Dotenv = require("dotenv");
+const Mongoose = require("mongoose");
 // To Read Environment Variables-
 Dotenv.config({});
 // Connecting With DB

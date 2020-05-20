@@ -4,8 +4,8 @@ import {
   SET_UPLOADS,
   GET_UPLOAD,
 } from "../Types/Types";
+
 const initialState = {
-  // upload: {},
   upload: null,
   uploads: null,
   loading: false,
@@ -23,7 +23,6 @@ export const UploadReducer = (State = initialState, Action) => {
       return {
         ...State,
         loading: true,
-        // This is being Modified
         uploads: null,
       };
     }

@@ -1,16 +1,17 @@
-import React, { Component } from "react";
-import Classes from "../Login/Login.module.css";
-import Input from "../../UI/Input/Input";
-import DropDown from "../../UI/DropDown/DropDown";
-import Button from "../../UI/Button/Button";
-import FileInput from "../../UI/FileInput/FileInput";
 import { connect } from "react-redux";
-import { Upload_Post } from "../../Redux/Actions/Uploads";
-import BackDrop from "../../UI/BackDrop/BackDrop";
-import Spinner from "../../UI/Spinner/Spinner";
+import React, { Component } from "react";
 import Model from "../../UI/Model/Model";
-let image;
-let prevId = 1;
+import Input from "../../UI/Input/Input";
+import Button from "../../UI/Button/Button";
+import Spinner from "../../UI/Spinner/Spinner";
+import Classes from "../Login/Login.module.css";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import DropDown from "../../UI/DropDown/DropDown";
+import FileInput from "../../UI/FileInput/FileInput";
+import { Upload_Post } from "../../Redux/Actions/Uploads";
+
+let prevId = 1,
+  image = null;
 class Upload extends Component {
   constructor(props) {
     super(props);
@@ -77,7 +78,7 @@ class Upload extends Component {
     const formData = new FormData();
     formData.append("month", this.state.month);
     formData.append("amount", this.state.amount);
-    formData.append("pic", this.state.pic);
+    formData.append("pic", image);
 
     this.props.Upload_Post(formData);
   };

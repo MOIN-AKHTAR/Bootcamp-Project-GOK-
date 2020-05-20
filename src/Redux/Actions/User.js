@@ -1,3 +1,4 @@
+import Axios from "axios";
 import {
   CREATE_USER,
   CLEAR_ERROR,
@@ -7,8 +8,8 @@ import {
   GET_SINGLE_USER,
   UPDATE_USER,
 } from "../Types/Types";
-import Axios from "axios";
 
+// SignUp New User By Admin
 export const Create_User = (data) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -44,6 +45,7 @@ export const Create_User = (data) => (Dispatch) => {
     });
 };
 
+// Load All User's By Admin
 export const Load_Users = (_) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -71,6 +73,7 @@ export const Load_Users = (_) => (Dispatch) => {
     });
 };
 
+// Get Single User With _id
 export const Get_Single_User = (Id) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -98,7 +101,7 @@ export const Get_Single_User = (Id) => (Dispatch) => {
     );
 };
 
-// http://localhost:5000/api/v1/user/:userid/office/
+// Update Specific User's Office By Admin
 export const Update_User_Office = (userId, newOffice) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -127,7 +130,7 @@ export const Update_User_Office = (userId, newOffice) => (Dispatch) => {
     );
 };
 
-// http://localhost:5000/api/v1/user/office
+// Get All Users Based On Given Office Name
 export const Get_User_Via_Office = (data) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -157,7 +160,7 @@ export const Get_User_Via_Office = (data) => (Dispatch) => {
     });
 };
 
-// http://localhost:5000/api/v1/user/year/:year
+// Get All User's Joined In Given Year
 export const Get_User_Via_Year = (year) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({

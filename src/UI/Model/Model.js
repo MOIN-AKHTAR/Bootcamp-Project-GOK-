@@ -1,6 +1,6 @@
 import React from "react";
-import BackDrop from "../BackDrop/BackDrop";
 import Classes from "./Model.module.css";
+import BackDrop from "../BackDrop/BackDrop";
 
 export default function Model(props) {
   return (

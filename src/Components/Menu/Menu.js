@@ -1,8 +1,8 @@
 import React from "react";
-import { NavLink, withRouter } from "react-router-dom";
-import Classes from "./Menu.module.css";
 import JWT_DECODE from "jwt-decode";
+import Classes from "./Menu.module.css";
 import { Store } from "../../Redux/Store";
+import { NavLink, withRouter } from "react-router-dom";
 import { CLEAR_CURRENT_USER } from "../../Redux/Types/Types";
 
 const isAuthenticated = () => {

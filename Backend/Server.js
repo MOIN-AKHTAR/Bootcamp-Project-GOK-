@@ -1,10 +1,10 @@
 const Express = require("express");
+const Morgan = require("morgan");
 const Dotenv = require("dotenv");
 const UserRoute = require("./Routes/UserRoute");
-const UploadRoute = require("./Routes/UploadRoute");
 const ErrorClass = require("./Utils/ErrorClass");
 const CustomError = require("./Utils/CustomError");
-const Morgan = require("morgan");
+const UploadRoute = require("./Routes/UploadRoute");
 // Running Connection Script
 require("./Connection");
 // Configuring For Environment Variables

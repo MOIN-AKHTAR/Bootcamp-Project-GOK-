@@ -1,12 +1,14 @@
-import React, { Component } from "react";
-import Classes from "./Login.module.css";
-import Input from "../../UI/Input/Input";
-import Button from "../../UI/Button/Button";
 import Validator from "validator";
 import { connect } from "react-redux";
-import { loginUser } from "../../Redux/Actions/LogIn";
-import BackDrop from "../../UI/BackDrop/BackDrop";
+import Input from "../../UI/Input/Input";
+import React, { Component } from "react";
+import Classes from "./Login.module.css";
+import { Store } from "../../Redux/Store";
+import Button from "../../UI/Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import { loginUser } from "../../Redux/Actions/LogIn";
+import { CLEAR_CURRENT_USER } from "../../Redux/Types/Types";
 
 class Login extends Component {
   state = {
@@ -102,6 +104,12 @@ class Login extends Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    if (this.props.auth.isAuthenticated) {
+      Store.dispatch({
+        type: CLEAR_CURRENT_USER,
+      });
+    }
+
     this.setState({
       loading: true,
     });

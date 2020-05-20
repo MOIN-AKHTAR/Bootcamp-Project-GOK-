@@ -1,11 +1,11 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Get_Single_User, Update_User_Office } from "../../Redux/Actions/User";
-import BackDrop from "../../UI/BackDrop/BackDrop";
-import Spinner from "../../UI/Spinner/Spinner";
-import Button from "../../UI/Button/Button";
-import Input from "../../UI/Input/Input";
 import { Link } from "react-router-dom";
+import React, { Component } from "react";
+import Input from "../../UI/Input/Input";
+import Button from "../../UI/Button/Button";
+import Spinner from "../../UI/Spinner/Spinner";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import { Get_Single_User, Update_User_Office } from "../../Redux/Actions/User";
 
 class GetSingleUser extends Component {
   state = {

@@ -6,7 +6,6 @@ import Users from "./Components/Users/Users";
 import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
 import Upload from "./Components/Upload/Upload";
-import Private from "./Components/Private/Private";
 import Profile from "./Components/Profile/Profile";
 import UploadList from "./Components/UploadList/UploadList";
 import SingleUpload from "./Components/SingleUpload/SingleUpload";

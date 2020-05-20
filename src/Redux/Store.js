@@ -1,6 +1,7 @@
-import { createStore, compose, applyMiddleware } from "redux";
 import RootReducer from "./RootReducer";
+import { createStore, compose, applyMiddleware } from "redux";
 const thunk = require("redux-thunk").default;
+
 export const Store = createStore(
   RootReducer,
   {},

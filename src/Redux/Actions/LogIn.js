@@ -1,5 +1,7 @@
-const { GET_ERROR, CLEAR_ERROR, SET_CURRENT_USER } = require("../Types/Types");
 const Axios = require("axios");
+const { GET_ERROR, CLEAR_ERROR, SET_CURRENT_USER } = require("../Types/Types");
+
+// To Login User
 export const loginUser = (Data) => (Dispatch) => {
   Dispatch({
     type: CLEAR_ERROR,

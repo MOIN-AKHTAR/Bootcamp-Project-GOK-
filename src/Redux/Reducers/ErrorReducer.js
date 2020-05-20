@@ -1,4 +1,5 @@
 import { GET_ERROR, CLEAR_ERROR } from "../Types/Types";
+
 const initialState = "";
 export const ErrorReducer = (State = initialState, Action) => {
   switch (Action.type) {

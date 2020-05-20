@@ -1,5 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
 import Classes from "./UploadImage.module.css";
+import React, { useRef, useState, useEffect } from "react";
 
 function UploadImage(props) {
   //uploadImage will put refference of input of type file-
@@ -15,14 +15,15 @@ function UploadImage(props) {
   //   It Will Set Image When User Will Select Image From File System-
   const SetImg = (e) => {
     let pickedImage;
-    let isValid;
+    // let isValid;
     if (e.target.files && e.target.files.length === 1) {
       pickedImage = e.target.files[0];
       setImage(e.target.files[0]);
-      isValid = true;
-    } else {
-      isValid = false;
+      // isValid = true;
     }
+    // else {
+    //   isValid = false;
+    // }
     props.onInput(pickedImage);
   };
   useEffect(() => {

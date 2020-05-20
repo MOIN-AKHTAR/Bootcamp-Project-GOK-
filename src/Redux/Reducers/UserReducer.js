@@ -5,9 +5,9 @@ import {
   GET_SINGLE_USER,
   UPDATE_USER,
 } from "../Types/Types";
+
 const initialState = {
   user: null,
-  // user:[]
   users: null,
   loading: false,
 };

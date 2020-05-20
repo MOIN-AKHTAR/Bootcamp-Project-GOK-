@@ -1,7 +1,7 @@
-const Mongoose = require("mongoose");
-const Jwt = require("jsonwebtoken");
-const Bcryptjs = require("bcryptjs");
 const Dotenv = require("dotenv");
+const Jwt = require("jsonwebtoken");
+const Mongoose = require("mongoose");
+const Bcryptjs = require("bcryptjs");
 const UploadModel = require("./UploadsModel");
 Dotenv.config({
   path: "../.env",

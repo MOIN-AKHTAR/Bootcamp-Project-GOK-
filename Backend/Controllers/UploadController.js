@@ -1,11 +1,11 @@
-const UploadModel = require("../Models/UploadsModel");
+const _ = require("lodash");
+require("../Middlewares/Cloudinary");
+const Cloudinary = require("cloudinary");
 const ErrorClass = require("../Utils/ErrorClass");
 const AsyncWrapper = require("../Utils/AsynWrapper");
+const UploadModel = require("../Models/UploadsModel");
 const UploadValidation = require("../Validations/UploadsValidation/CreateUpload");
-const Cloudinary = require("cloudinary");
-const _ = require("lodash");
-// const { SendEmail } = require("../Utils/SendEmail");
-require("../Middlewares/Cloudinary");
+
 // @Desc   Create Upload
 // @Route   POST api/v1/upload/
 // @Access  Private
@@ -49,7 +49,6 @@ exports.updateUpload = AsyncWrapper(async (req, res, next) => {
   }
   if (req.file) {
     const Result = await Cloudinary.v2.uploader.upload(req.file.path);
-    // req.body.pic = Result.secure_url;
     Upload.pic.unshift(Result.secure_url);
   }
 

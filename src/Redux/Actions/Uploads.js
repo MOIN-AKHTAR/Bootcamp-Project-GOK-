@@ -1,5 +1,4 @@
-import { GET_UPLOADS } from "../Types/Types";
-
+const Axios = require("axios");
 const {
   POST_UPLOAD,
   GET_ERROR,
@@ -8,8 +7,8 @@ const {
   SET_UPLOADS,
   GET_UPLOAD,
 } = require("../Types/Types");
-const Axios = require("axios");
 
+// Upload New Post
 export const Upload_Post = (Data) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -45,6 +44,7 @@ export const Upload_Post = (Data) => (Dispatch) => {
     });
 };
 
+//Get All Post Of Currently LoggedIn Users
 export const Get_Uploads = (_) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -72,6 +72,7 @@ export const Get_Uploads = (_) => (Dispatch) => {
     });
 };
 
+// Get A Specific Upload With Some  _id
 export const Get_Upload = (id) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -99,6 +100,7 @@ export const Get_Upload = (id) => (Dispatch) => {
     });
 };
 
+//Update A Specific Upload With _id
 export const UpdateUpload = (Id, Data) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -127,6 +129,7 @@ export const UpdateUpload = (Id, Data) => (Dispatch) => {
     });
 };
 
+// Get Uploads Based On Given Month It Includes All User's Upoads
 export const GetUploadViaMonth = (Month) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -154,6 +157,7 @@ export const GetUploadViaMonth = (Month) => (Dispatch) => {
     );
 };
 
+// Get Uploads Based On Given Year It Includes All User's Uploads
 export const GetUploadViaYear = (year) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -181,6 +185,7 @@ export const GetUploadViaYear = (year) => (Dispatch) => {
     );
 };
 
+// Get Specific User's All Uploads
 export const Get_Specific_User_Uploads = (Id) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -208,7 +213,7 @@ export const Get_Specific_User_Uploads = (Id) => (Dispatch) => {
     );
 };
 
-// http://localhost:5000/api/v1/user/:userid/month/:month
+// Get Specific User's All Uploads Based On Given Month
 export const Get_Specific_User_Uploads_Via_Month = (Id, Month) => (
   Dispatch
 ) => {
@@ -223,7 +228,6 @@ export const Get_Specific_User_Uploads_Via_Month = (Id, Month) => (
     },
   })
     .then((res) => {
-      console.log(res.data.data);
       Dispatch({
         type: SET_UPLOADS,
         Payload: res.data.data,
@@ -239,6 +243,7 @@ export const Get_Specific_User_Uploads_Via_Month = (Id, Month) => (
     );
 };
 
+// Get Specific User's All Uploads Based On Given Status
 export const Get_Specific_User_Uploads_Via_Status = (Id, Status) => (
   Dispatch
 ) => {
@@ -268,6 +273,7 @@ export const Get_Specific_User_Uploads_Via_Status = (Id, Status) => (
     );
 };
 
+// Approve Upload By Admin
 export const Approve_Upload = (Id) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -295,6 +301,7 @@ export const Approve_Upload = (Id) => (Dispatch) => {
     );
 };
 
+// Reject Upload By Admin
 export const Reject_Upload = (Id) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({
@@ -322,6 +329,7 @@ export const Reject_Upload = (Id) => (Dispatch) => {
     );
 };
 
+// Pending Upload By Admin
 export const Pedn_Upload = (Id) => (Dispatch) => {
   const token = localStorage.getItem("jwt_token");
   Dispatch({

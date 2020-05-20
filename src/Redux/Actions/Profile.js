@@ -1,6 +1,7 @@
-import { GET_ERROR, GET_PROFILE, LOAD_PROFILE } from "../Types/Types";
 import Axios from "axios";
+import { GET_ERROR, GET_PROFILE, LOAD_PROFILE } from "../Types/Types";
 
+// Get Current LoggedIn User's Profile
 export const GetProfile = () => (Dispatch) => {
   Dispatch({
     type: LOAD_PROFILE,
@@ -28,6 +29,7 @@ export const GetProfile = () => (Dispatch) => {
     });
 };
 
+// Update Currently LoggedIn User's Profile
 export const UpdateProfile = (Data) => (Dispatch) => {
   Dispatch({
     type: LOAD_PROFILE,

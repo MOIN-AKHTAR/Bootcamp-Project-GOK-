@@ -1,11 +1,11 @@
-import React, { Component } from "react";
 import { connect } from "react-redux";
-import { GetProfile, UpdateProfile } from "../../Redux/Actions/Profile";
-import BackDrop from "../../UI/BackDrop/BackDrop";
-import Spinner from "../../UI/Spinner/Spinner";
-import UploadImage from "../../UI/UploadImage/UploadImage";
 import Input from "../../UI/Input/Input";
+import React, { Component } from "react";
 import Button from "../../UI/Button/Button";
+import Spinner from "../../UI/Spinner/Spinner";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import UploadImage from "../../UI/UploadImage/UploadImage";
+import { GetProfile, UpdateProfile } from "../../Redux/Actions/Profile";
 
 let Image;
 class Profile extends Component {

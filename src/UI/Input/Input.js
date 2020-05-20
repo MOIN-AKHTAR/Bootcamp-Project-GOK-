@@ -18,20 +18,22 @@ export default function Input({
     inputClasses.push(Classes.invalidInput);
   }
   return (
-    <div className={Classes.wrapper}>
-      <label className={Classes.label} htmlFor={id}>
-        {title}
-      </label>
-      <input
-        onChange={onChange}
-        value={value}
-        className={inputClasses.join(" ")}
-        type={type}
-        name={name}
-        id={id}
-        placeholder={placeholder}
-      />
-      {error ? <label className={Classes.errorLabel}>{error}</label> : null}
-    </div>
+    <React.Fragment>
+      <div className={Classes.wrapper}>
+        <label className={Classes.label} htmlFor={id}>
+          {title}
+        </label>
+        <input
+          onChange={onChange}
+          value={value}
+          className={inputClasses.join(" ")}
+          type={type}
+          name={name}
+          id={id}
+          placeholder={placeholder}
+        />
+        {error ? <label className={Classes.errorLabel}>{error}</label> : null}
+      </div>
+    </React.Fragment>
   );
 }

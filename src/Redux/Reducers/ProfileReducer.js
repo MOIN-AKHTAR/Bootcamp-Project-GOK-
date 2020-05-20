@@ -1,4 +1,5 @@
 import { LOAD_PROFILE, GET_PROFILE } from "../Types/Types";
+
 const initialState = {
   loading: false,
   profile: null,

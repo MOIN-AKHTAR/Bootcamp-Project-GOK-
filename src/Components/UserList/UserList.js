@@ -1,3 +1,6 @@
+import "antd/dist/antd.css";
+import { DatePicker } from "antd";
+import { connect } from "react-redux";
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import {
@@ -5,9 +8,6 @@ import {
   Get_User_Via_Year,
   Load_Users,
 } from "../../Redux/Actions/User";
-import { DatePicker } from "antd";
-import { connect } from "react-redux";
-import "antd/dist/antd.css";
 
 class UserList extends Component {
   constructor(props) {

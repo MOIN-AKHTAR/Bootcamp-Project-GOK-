@@ -1,14 +1,14 @@
+import "antd/dist/antd.css";
+import { DatePicker } from "antd";
+import { connect } from "react-redux";
 import React, { Component } from "react";
-import Classes from "../Login/Login.module.css";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
-import { Create_User } from "../../Redux/Actions/User";
-import { connect } from "react-redux";
-import BackDrop from "../../UI/BackDrop/BackDrop";
 import Spinner from "../../UI/Spinner/Spinner";
-import { DatePicker } from "antd";
-import moment from "moment";
-import "antd/dist/antd.css";
+import Classes from "../Login/Login.module.css";
+import BackDrop from "../../UI/BackDrop/BackDrop";
+import { Create_User } from "../../Redux/Actions/User";
+
 let prevId = 1;
 class SignUp extends Component {
   state = {
