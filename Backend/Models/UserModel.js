@@ -74,16 +74,13 @@ userSchema.methods.genToken = function () {
 
 // Decrypt Hashed Password
 userSchema.methods.matchPassword = async function (Password) {
-  // if (this.role === "admin") {
-  //   return Bcryptjs.compare(Password, this.password);
-  // }
   return await Bcryptjs.compare(Password, this.hashedPassword);
 };
 
 // Encrypting Password
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
-    // Generate Salt Which Is Just A Series Of Random String
+    // Generate Salt Which Is Just A Series Of Random String Which Will Protect From Rainbow List Attacks
     const salt = await Bcryptjs.genSalt(10);
     // Hash Password With The Help Of Salt
     this.hashedPassword = await Bcryptjs.hash(this.password, salt);

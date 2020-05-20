@@ -7,6 +7,7 @@ import { Store } from "./Redux/Store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { setCurrentUser } from "./Redux/Actions/LogIn";
+import { CLEAR_CURRENT_USER } from "./Redux/Types/Types";
 
 let JWT = localStorage.getItem("jwt_token");
 
@@ -19,6 +20,9 @@ if (JWT) {
   const CurrentTime = Date.now() / 1000;
 
   if (exp < CurrentTime) {
+    Store.dispatch({
+      type: CLEAR_CURRENT_USER,
+    });
     localStorage.clear();
     window.location.assign("/login");
   }

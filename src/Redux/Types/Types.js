@@ -1,4 +1,5 @@
 export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const CLEAR_CURRENT_USER = "CLEAR_CURRENT_USER";
 export const GET_ERROR = "GET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 export const POST_UPLOAD = "POST_UPLOAD";

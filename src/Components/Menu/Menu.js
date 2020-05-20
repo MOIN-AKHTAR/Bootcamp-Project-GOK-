@@ -1,7 +1,9 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import Classes from "./Menu.module.css";
-const JWT_DECODE = require("jwt-decode");
+import JWT_DECODE from "jwt-decode";
+import { Store } from "../../Redux/Store";
+import { CLEAR_CURRENT_USER } from "../../Redux/Types/Types";
 
 const isAuthenticated = () => {
   if (typeof window === "undefined") {
@@ -17,6 +19,9 @@ const isAuthenticated = () => {
 const signOut = (history) => {
   if (typeof window !== "undefined") {
     localStorage.removeItem("jwt_token");
+    Store.dispatch({
+      type: CLEAR_CURRENT_USER,
+    });
     history.push("/login");
   }
 };

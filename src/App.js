@@ -27,16 +27,24 @@ const isAuthenticated = () => {
 class App extends Component {
   render() {
     let Element;
+    if (!isAuthenticated()) {
+      Element = (
+        <>
+          <Route path="/login" component={Login} />
+          <Redirect to="/login" />
+        </>
+      );
+    }
     if (
       isAuthenticated() &&
       JWT(localStorage.getItem("jwt_token")).role === "user"
     ) {
       Element = (
         <>
-          <Private path="/upload" component={Upload} />
-          <Private exact path="/myUploads" component={UploadList} />
-          <Private path="/myUpload/:uploadId" component={SingleUpload} />
-          <Private path="/myprofile" component={Profile} />
+          <Route path="/upload" component={Upload} />
+          <Route path="/myUploads" component={UploadList} />
+          <Route path="/myUpload/:uploadId" component={SingleUpload} />
+          <Route path="/myprofile" component={Profile} />
           <Redirect to="/upload" />
         </>
       );
@@ -46,15 +54,15 @@ class App extends Component {
     ) {
       Element = (
         <>
-          <Private path="/signup" component={SignUp} />
-          <Private exact path="/user/:userId" component={GetSingleUser} />
-          <Private
+          <Route path="/signup" component={SignUp} />
+          <Route path="/users" component={Users} />
+          <Route path="/myprofile" component={Profile} />
+          <Route exact path="/user/:userId" component={GetSingleUser} />
+          <Route path="/myUpload/:uploadId" component={SingleUpload} />
+          <Route
             path="/user/:userId/uploads"
             component={GetSingleUserUploads}
           />
-          <Private path="/users" component={Users} />
-          <Private path="/myUpload/:uploadId" component={SingleUpload} />
-          <Private path="/myprofile" component={Profile} />
           <Redirect to="/signup" />
         </>
       );
@@ -62,11 +70,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Menu />
-        <Switch>
-          <Route path="/login" exact component={Login} />
-          {Element}
-          <Redirect from="/" to="/login" />
-        </Switch>
+        <Switch>{Element}</Switch>
       </BrowserRouter>
     );
   }
