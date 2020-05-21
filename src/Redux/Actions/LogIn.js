@@ -16,6 +16,7 @@ export const loginUser = (Data) => (Dispatch) => {
       setCurrentUser(token, Dispatch);
     })
     .catch((err) => {
+      console.log(err.response.data);
       Dispatch({
         type: GET_ERROR,
         Payload: err.response.data.message,
@@ -38,11 +39,18 @@ export const setCurrentUser = (token, Dispatch) => {
       });
     })
     .catch((err) => {
-      Dispatch({
-        type: GET_ERROR,
-        Payload: {
-          message: err.response.data.message,
-        },
-      });
+      if (err.response.data.errors) {
+        Dispatch({
+          type: GET_ERROR,
+          Payload: err.response.data.errors,
+        });
+      } else {
+        Dispatch({
+          type: GET_ERROR,
+          Payload: {
+            message: err.response.data.message,
+          },
+        });
+      }
     });
 };

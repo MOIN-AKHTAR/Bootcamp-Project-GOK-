@@ -2,16 +2,16 @@ import React from "react";
 import Classes from "./Input.module.css";
 
 export default function Input({
-  id,
-  name,
+  id = "",
+  name = "",
   type = "text",
-  title,
-  placeholder,
-  error,
+  title = "",
+  placeholder = "",
+  error = "",
   value = "",
-  onChange,
-  valid,
-  touched,
+  onChange = "",
+  valid = "",
+  touched = "",
 }) {
   const inputClasses = [Classes.input];
   if (!valid && touched) {

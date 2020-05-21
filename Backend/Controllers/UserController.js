@@ -9,14 +9,15 @@ const Password_Generator = require("generate-password");
 const LogInValidation = require("../Validations/UserValidation/LoginValidation");
 const SignUpValidation = require("../Validations/UserValidation/SignUpValidation");
 const ProfileValidation = require("../Validations/UserValidation/ProfileValidation");
+const { sendEmail } = require("../Middlewares/Sendgrid");
 
 // @Desc   Create User
 // @Route   POST api/v1/users/signup
 // @Access  Public
 exports.SignUp = AsyncWrapper(async (req, res, next) => {
   // Validating Inputs
-  console.log(req.body);
   const { error, isValid } = SignUpValidation(req.body);
+
   if (!isValid) {
     return next(new ErrorClass("Validation Error", error, 400));
   }
@@ -44,12 +45,17 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
   }
   // Sending Email Is Remaining
   let Time = new Date();
-  console.log(
-    `Dear ${
-      User.name
-    } Your Account Has Been Created At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()} With Following Information`
-  );
-  console.log(User);
+
+  await sendEmail({
+    to: User.email,
+    from: "moinakhter179@gmail.com",
+    subject: "Account Created",
+    text: "Account Created",
+    html: `<h4>Your Account Has Been Creaed With The Following Information</h4>
+          <strong>Email:${User.email}</strong><br><strong>Password:${User.password}</strong><br>
+          <p>For furthur detail login for your account and view your profile Thank You :)</p>`,
+  });
+
   res.status(200).json({
     success: true,
     data: User,
@@ -62,6 +68,7 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
 exports.Login = AsyncWrapper(async (req, res, next) => {
   // Checking Validations
   const { error, isValid } = LogInValidation(req.body);
+
   if (!isValid) {
     return next(new ErrorClass("Validation Error", error, 400));
   }
@@ -210,10 +217,13 @@ exports.UpdateUserOffice = AsyncWrapper(async (req, res, next) => {
       : User.office;
   User.office = req.body.office;
   await User.save();
-  // Sending Email Remaining
-  console.log(
-    `Dear ${User.name} Your Office Has Been Changed From ${prevOffice} To ${req.body.office}`
-  );
+  await sendEmail({
+    to: User.email,
+    from: "moinakhter179@gmail.com",
+    subject: "Account Created",
+    text: "Account Created",
+    html: `<h4>Dear ${User.name} Your Office Has Been Changed From ${prevOffice} To ${req.body.office}</h4>`,
+  });
   res.status(200).json({
     success: true,
     data: User,

@@ -8,6 +8,7 @@ import {
   Get_User_Via_Year,
   Load_Users,
 } from "../../Redux/Actions/User";
+import { MONTH } from "../../Utils/Month";
 
 class UserList extends Component {
   constructor(props) {
@@ -121,7 +122,7 @@ class UserList extends Component {
                   <tr key={user._id}>
                     <th scope="row">{index}</th>
                     <td>{user.name}</td>
-                    <td>{user.month}</td>
+                    <td>{MONTH[user.month]}</td>
                     <td>{user.year}</td>
                     <td>
                       <Link

@@ -7,6 +7,7 @@ import { withRouter } from "react-router-dom";
 import Classes from "./UploadItems.module.css";
 import DropDown from "../../UI/DropDown/DropDown";
 import { Get_Uploads } from "../../Redux/Actions/Uploads";
+import { MONTH } from "../../Utils/Month";
 
 class UploadItem extends Component {
   constructor(props) {
@@ -88,7 +89,7 @@ class UploadItem extends Component {
                   <th scope="row">{index}</th>
                   <td>{upload.amount}</td>
                   <td>{upload.status}</td>
-                  <td>{upload.month}</td>
+                  <td>{MONTH[upload.month]}</td>
                   <td>{upload.year}</td>
                   <td>
                     <Link

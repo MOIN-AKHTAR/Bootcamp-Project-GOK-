@@ -1,6 +1,7 @@
 const _ = require("lodash");
 require("../Middlewares/Cloudinary");
 const Cloudinary = require("cloudinary");
+const { sendEmail } = require("../Middlewares/Sendgrid");
 const ErrorClass = require("../Utils/ErrorClass");
 const AsyncWrapper = require("../Utils/AsynWrapper");
 const UploadModel = require("../Models/UploadsModel");
@@ -23,8 +24,16 @@ exports.createUpload = AsyncWrapper(async (req, res, next) => {
   if (!Upload) {
     return next(new ErrorClass("Server Error", undefined, 500));
   }
+  const Data = () => {
+    console.log("Jerresy");
+  };
   //Sending Email
-  console.log("Email Sended To Admin");
+  await sendEmail({
+    to: "moinakhter179@gmail.com",
+    from: "moinakhter178@gmail.com",
+    subject: "New Upload",
+    html: `<button>Approve</button> <button>Declined</button>`,
+  });
   res.status(201).json({
     success: true,
     data: Upload,
@@ -151,11 +160,15 @@ exports.rejectUpload = AsyncWrapper(async (req, res, next) => {
   await Upload.save();
   // Sending Email Is Remaining
   let Time = new Date();
-  console.log(
-    `Dear ${Upload.user.name} Your Upload Request With Id ${
+  await sendEmail({
+    to: Upload.user.email,
+    from: "moinakhter179@gmail.com",
+    subject: "Upload Rejected",
+    html: `<h4>Dear ${Upload.user.name} Your Upload Request With Id ${
       Upload._id
-    } Has Been Declined At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
-  );
+    } Has Been Rejected At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}<h4>`,
+  });
+
   res.status(200).json({
     success: true,
     data: Upload,
@@ -174,15 +187,18 @@ exports.approveUpload = AsyncWrapper(async (req, res, next) => {
     );
   }
   Upload.status = "approved";
+  await Upload.save();
   // Sending Email Is Remaining
   let Time = new Date();
-  console.log(
-    `Dear ${Upload.user.name} Your Upload Request With Id ${
+  await sendEmail({
+    to: Upload.user.email,
+    from: "moinakhter179@gmail.com",
+    subject: "Upload Approved",
+    html: `<h4>Dear ${Upload.user.name} Your Upload Request With Id ${
       Upload._id
-    } Has Been Approved At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
-  );
+    } Has Been Approved At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}<h4>`,
+  });
 
-  await Upload.save();
   res.status(200).json({
     success: true,
     data: Upload,
@@ -200,15 +216,17 @@ exports.pendUpload = AsyncWrapper(async (req, res, next) => {
     );
   }
   Upload.status = "pending";
+  await Upload.save();
   // Sending Email Is Remaining
   let Time = new Date();
-  console.log(
-    `Dear ${Upload.user.name} Your Upload Request With Id ${
+  await sendEmail({
+    to: Upload.user.email,
+    from: "moinakhter179@gmail.com",
+    subject: "Upload Pending",
+    html: `<h4>Dear ${Upload.user.name} Your Upload Request With Id ${
       Upload._id
-    } Has Been Pended At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}`
-  );
-
-  await Upload.save();
+    } Has Been Pended At ${Time.getHours()}:${Time.getMinutes()}:${Time.getSeconds()}<h4>`,
+  });
   res.status(200).json({
     success: true,
     data: Upload,

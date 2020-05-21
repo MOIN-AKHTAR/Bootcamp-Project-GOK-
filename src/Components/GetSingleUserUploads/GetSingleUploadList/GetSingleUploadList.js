@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import React, { Component } from "react";
+import { MONTH } from "../../../Utils/Month";
 
 class GetSingleUploadList extends Component {
   constructor(props) {
@@ -39,7 +40,7 @@ class GetSingleUploadList extends Component {
                       <th scope="row">{index}</th>
                       <td>{upload.amount}</td>
                       <td>{upload.status}</td>
-                      <td>{upload.month}</td>
+                      <td>{MONTH[upload.month]}</td>
                       <td>{upload.year}</td>
                       <td>
                         <Link
