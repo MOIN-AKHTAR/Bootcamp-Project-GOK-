@@ -91,7 +91,7 @@ class Login extends Component {
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.auth.isAuthenticated) {
       // If User Is Authenticated Move To Upload Page
-      this.props.history.push("/upload");
+      this.props.history.push("/users");
     }
     if (nextProps.error) {
       // If Any Error Show Errors On Login Form

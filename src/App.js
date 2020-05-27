@@ -44,7 +44,7 @@ class App extends Component {
           <Route path="/myUploads" component={UploadList} />
           <Route path="/myUpload/:uploadId" component={SingleUpload} />
           <Route path="/myprofile" component={Profile} />
-          <Redirect to="/upload" />
+          <Redirect to="/myUploads" />
         </>
       );
     } else if (
@@ -53,8 +53,8 @@ class App extends Component {
     ) {
       Element = (
         <>
+          <Route path="/users" component={Users} exact />
           <Route path="/signup" component={SignUp} />
-          <Route path="/users" component={Users} />
           <Route path="/myprofile" component={Profile} />
           <Route exact path="/user/:userId" component={GetSingleUser} />
           <Route path="/myUpload/:uploadId" component={SingleUpload} />
@@ -62,7 +62,7 @@ class App extends Component {
             path="/user/:userId/uploads"
             component={GetSingleUserUploads}
           />
-          <Redirect to="/signup" />
+          <Redirect to="/users" />
         </>
       );
     }

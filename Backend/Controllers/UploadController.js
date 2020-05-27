@@ -6,6 +6,9 @@ const ErrorClass = require("../Utils/ErrorClass");
 const AsyncWrapper = require("../Utils/AsynWrapper");
 const UploadModel = require("../Models/UploadsModel");
 const UploadValidation = require("../Validations/UploadsValidation/CreateUpload");
+const Data = function () {
+  console.log("Jerresy");
+};
 
 // @Desc   Create Upload
 // @Route   POST api/v1/upload/
@@ -24,15 +27,12 @@ exports.createUpload = AsyncWrapper(async (req, res, next) => {
   if (!Upload) {
     return next(new ErrorClass("Server Error", undefined, 500));
   }
-  const Data = () => {
-    console.log("Jerresy");
-  };
+
   //Sending Email
   await sendEmail({
     to: "moinakhter179@gmail.com",
     from: "moinakhter178@gmail.com",
     subject: "New Upload",
-    html: `<button>Approve</button> <button>Declined</button>`,
   });
   res.status(201).json({
     success: true,

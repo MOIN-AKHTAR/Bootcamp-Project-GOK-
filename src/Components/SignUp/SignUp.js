@@ -8,6 +8,7 @@ import Spinner from "../../UI/Spinner/Spinner";
 import Classes from "../Login/Login.module.css";
 import BackDrop from "../../UI/BackDrop/BackDrop";
 import { Create_User } from "../../Redux/Actions/User";
+import moment from "moment";
 
 let prevId = 1;
 class SignUp extends Component {
@@ -102,7 +103,7 @@ class SignUp extends Component {
             {this.state.message && (
               <h1 className="text-center text-danger">{this.state.message}</h1>
             )}
-            <h1 className="text-center mb-2 text-primary">SignUp</h1>
+            <h1 className="text-center mb-2 text-primary">Add A User</h1>
             <div className={Classes.form}>
               <form onSubmit={this.onSubmit}>
                 <Input
@@ -170,6 +171,7 @@ class SignUp extends Component {
                     }}
                     picker="year"
                     id="year"
+                    defaultValue={moment(this.state.year, "YYYY")}
                     onChange={this.onChangeYear}
                     placeholder="Select Year"
                   />

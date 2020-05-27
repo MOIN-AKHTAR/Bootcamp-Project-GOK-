@@ -1,3 +1,6 @@
+import moment from "moment";
+import "antd/dist/antd.css";
+import { DatePicker } from "antd";
 import { connect } from "react-redux";
 import React, { Component } from "react";
 import Model from "../../UI/Model/Model";
@@ -6,9 +9,9 @@ import Button from "../../UI/Button/Button";
 import Spinner from "../../UI/Spinner/Spinner";
 import Classes from "../Login/Login.module.css";
 import BackDrop from "../../UI/BackDrop/BackDrop";
-import DropDown from "../../UI/DropDown/DropDown";
 import FileInput from "../../UI/FileInput/FileInput";
 import { Upload_Post } from "../../Redux/Actions/Uploads";
+import DropDown from "../../UI/DropDown/DropDown";
 
 let prevId = 1,
   image = null;
@@ -16,12 +19,11 @@ class Upload extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      month: 0,
+      month: new Date().getMonth(),
+      year: new Date().getFullYear(),
       amount: "",
       pic: "",
       error: "",
-      loading: false,
-      showModel: false,
       option: [
         { value: 0, title: "January" },
         { value: 1, title: "February" },
@@ -36,6 +38,8 @@ class Upload extends Component {
         { value: 10, title: "November" },
         { value: 11, title: "December" },
       ],
+      loading: false,
+      showModel: false,
     };
   }
 
@@ -60,6 +64,15 @@ class Upload extends Component {
     }
   }
 
+  // Change Year
+  onChangeYear = (date) => {
+    if (date) {
+      this.setState({
+        year: new Date(date._d).getFullYear(),
+      });
+    }
+  };
+
   // Change Inputs
   onChangeHandler = (e) => {
     let value = e.target.name === "pic" ? e.target.files[0] : e.target.value;
@@ -78,6 +91,7 @@ class Upload extends Component {
     const formData = new FormData();
     formData.append("month", this.state.month);
     formData.append("amount", this.state.amount);
+    formData.append("year", this.state.year);
     formData.append("pic", image);
 
     this.props.Upload_Post(formData);
@@ -135,6 +149,38 @@ class Upload extends Component {
                     onChange={this.onChangeHandler}
                     value={this.state.month}
                   />
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "corowlumn",
+                      margin: "16px auto",
+                      width: "80%",
+                    }}
+                  >
+                    <label
+                      style={{
+                        fontWeight: "bolder",
+                        fontSize: "1rem",
+                        fontStyle: "oblique",
+                        width: "20%",
+                        marginRight: "10px",
+                      }}
+                      htmlFor="year"
+                    >
+                      Year
+                    </label>
+                    <DatePicker
+                      style={{
+                        width: "100%",
+                      }}
+                      picker="year"
+                      id="year"
+                      defaultValue={moment(this.state.year, "YYYY")}
+                      onChange={this.onChangeYear}
+                      placeholder="Select Year"
+                    />
+                  </div>
+
                   <Input
                     type="number"
                     placeholder="Enter Your Amount"
