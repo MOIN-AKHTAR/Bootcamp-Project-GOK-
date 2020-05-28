@@ -7,6 +7,7 @@ import {
   LOAD_USER,
   GET_SINGLE_USER,
   UPDATE_USER,
+  VERIFY_USER,
 } from "../Types/Types";
 
 // SignUp New User By Admin
@@ -181,6 +182,24 @@ export const Get_User_Via_Year = (year) => (Dispatch) => {
     )
     .catch((err) => {
       console.log(err.response.data);
+      Dispatch({
+        type: GET_ERROR,
+        Payload: {
+          message: err.response.data.message,
+        },
+      });
+    });
+};
+
+// Get All User's Joined In Given Year
+export const Verify_Account = (Id) => (Dispatch) => {
+  Axios.patch(`http://localhost:5000/api/v1/user/verify/${Id}`, {})
+    .then((res) => {
+      alert("Verified Successfully!!!");
+      window.location.assign("/login");
+    })
+    .catch((err) => {
+      console.log(err.response.data.message);
       Dispatch({
         type: GET_ERROR,
         Payload: {

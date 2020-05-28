@@ -124,7 +124,6 @@ class SingleUpload extends Component {
               )}
 
               <div className="mt-3">
-                <h3>ID:{this.state.upload._id}</h3>
                 <h3>Month:{MONTH[this.state.upload.month]}</h3>
                 <h3>Year: {this.state.upload.year}</h3>
                 <h3>Status: {this.state.upload.status}</h3>

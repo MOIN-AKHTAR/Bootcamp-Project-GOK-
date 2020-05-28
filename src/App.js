@@ -7,6 +7,7 @@ import Login from "./Components/Login/Login";
 import SignUp from "./Components/SignUp/SignUp";
 import Upload from "./Components/Upload/Upload";
 import Profile from "./Components/Profile/Profile";
+import Verification from "./Components/Login/Verification";
 import UploadList from "./Components/UploadList/UploadList";
 import SingleUpload from "./Components/SingleUpload/SingleUpload";
 import GetSingleUser from "./Components/GetSingleUser/GetSingleUser";
@@ -29,7 +30,7 @@ class App extends Component {
     if (!isAuthenticated()) {
       Element = (
         <>
-          <Route path="/login" component={Login} />
+          <Route path="/login" component={Login} exact />
           <Redirect to="/login" />
         </>
       );
@@ -69,7 +70,10 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Menu />
-        <Switch>{Element}</Switch>
+        <Switch>
+          <Route path="/verify/:id" component={Verification} exact />
+          {Element}
+        </Switch>
       </BrowserRouter>
     );
   }

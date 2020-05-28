@@ -45,7 +45,7 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
   }
   // Sending Email Is Remaining
   let Time = new Date();
-
+  const redirectTo = `http://localhost:3000/verify/${User._id}`;
   await sendEmail({
     to: User.email,
     from: "moinakhter179@gmail.com",
@@ -53,7 +53,9 @@ exports.SignUp = AsyncWrapper(async (req, res, next) => {
     text: "Account Created",
     html: `<h4>Your Account Has Been Creaed With The Following Information</h4>
           <strong>Email:${User.email}</strong><br><strong>Password:${User.password}</strong><br>
-          <p>For furthur detail login for your account and view your profile Thank You :)</p>`,
+          <p>For furthur detail login for your account and view your profile Thank You :)</p>
+          <hr/>
+          <a href=${redirectTo}>Click Here To Verify Your Account</a>`,
   });
 
   res.status(200).json({
@@ -83,6 +85,11 @@ exports.Login = AsyncWrapper(async (req, res, next) => {
   }
 
   const Token = User.genToken();
+  // Changing Status
+  if (!User.status) {
+    User.status = true;
+  }
+  await User.save();
 
   res.status(200).json({
     success: true,
@@ -249,7 +256,6 @@ exports.GetSpecificUserUploadViaMonth = AsyncWrapper(async (req, res, next) => {
 // @Access  Private   (Admin)
 exports.GetSpecificUserUploadViaStatus = AsyncWrapper(
   async (req, res, next) => {
-    console.log("GetSpecificUserUploadViaStatus");
     const Uploads = await UploadsModel.find({
       user: req.params.userid,
       status: req.params.status,
@@ -260,3 +266,21 @@ exports.GetSpecificUserUploadViaStatus = AsyncWrapper(
     });
   }
 );
+
+exports.VerifyAccount = AsyncWrapper(async (req, res, next) => {
+  const Verified = await UserModel.findByIdAndUpdate(
+    req.params.uid,
+    {
+      status: true,
+    },
+    {
+      new: true,
+    }
+  );
+  if (!Verified) {
+    return next(new ErrorClass("Something Gone Wrong!!!", undefined, 500));
+  }
+  res.status(200).json({
+    success: true,
+  });
+});

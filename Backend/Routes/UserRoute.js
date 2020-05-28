@@ -13,6 +13,7 @@ const {
   GetUserViaYear,
   GetSpecificUserUploadViaMonth,
   GetSpecificUserUploadViaStatus,
+  VerifyAccount,
 } = require("../Controllers/UserController");
 const { Protected } = require("../Middlewares/Protected");
 const { grantAccess } = require("../Middlewares/GrantAccess");
@@ -22,11 +23,8 @@ const Multer = require("../Middlewares/Multer");
 const Route = Express.Router();
 
 // Unprotected Routes
-
 Route.route("/login").post(Login);
-
-// Route.route("/signup").post(SignUp);
-
+Route.route("/verify/:uid").patch(VerifyAccount);
 // Protected Routes
 Route.use(Protected);
 Route.route("/").get(grantAccess("admin"), GetUsers);
@@ -44,6 +42,7 @@ Route.route("/:userid/month/:month").get(
   grantAccess("admin"),
   GetSpecificUserUploadViaMonth
 );
+
 Route.route("/:userid/status/:status").get(
   grantAccess("admin"),
   GetSpecificUserUploadViaStatus

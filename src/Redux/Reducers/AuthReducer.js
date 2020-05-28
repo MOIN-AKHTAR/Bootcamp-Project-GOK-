@@ -3,6 +3,7 @@ import { SET_CURRENT_USER, CLEAR_CURRENT_USER } from "../Types/Types";
 const initialState = {
   isAuthenticated: false,
   user: null,
+  verified: false,
 };
 
 export const AuthReducer = (State = initialState, Action) => {

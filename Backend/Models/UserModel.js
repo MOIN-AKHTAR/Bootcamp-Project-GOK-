@@ -60,6 +60,10 @@ const userSchema = Mongoose.Schema(
       type: Number,
       default: new Date().getMonth(),
     },
+    status: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

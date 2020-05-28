@@ -16,6 +16,7 @@ const Data = function () {
 exports.createUpload = AsyncWrapper(async (req, res, next) => {
   req.body.user = req.user._id;
   req.body.pic = req.file ? req.file.path : "";
+  console.log(req.user);
   const { error, isValid } = UploadValidation(req.body);
   if (!isValid) {
     return next(new ErrorClass("Validation Error", error, 400));
@@ -31,8 +32,9 @@ exports.createUpload = AsyncWrapper(async (req, res, next) => {
   //Sending Email
   await sendEmail({
     to: "moinakhter179@gmail.com",
-    from: "moinakhter178@gmail.com",
+    from: req.user.email,
     subject: "New Upload",
+    html: `<h1>New Upload By ${req.user.name} `,
   });
   res.status(201).json({
     success: true,

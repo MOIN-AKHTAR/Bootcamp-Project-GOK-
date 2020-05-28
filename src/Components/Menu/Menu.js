@@ -44,7 +44,7 @@ function MenuBar({ history }) {
                   style={isActive(history, "/signup")}
                   className="nav-link"
                 >
-                  Signup
+                  Add User
                 </NavLink>
               </li>
               <li>
